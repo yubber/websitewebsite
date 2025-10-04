@@ -4,3 +4,11 @@
 .stretchroman {
 	font-family: 'Times New Roman MT Condensed', Times, serif;
 }
+
+.glow {
+	filter: drop-shadow(0 1px 3px);
+}
+
+.hovergrow {
+	@apply hover:scale-109 transition duration-300
+}

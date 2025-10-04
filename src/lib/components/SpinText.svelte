@@ -1,5 +1,5 @@
 <script>
-	let { layers=8, gapPx=2, RGB, lumDrop=0.005, class: className = '', children, ...rest } = $props();
+	let { layers=8, gapPx=2, RGB, lumDrop=0.0055, class: className = '', children, ...rest } = $props();
 
 	// avoid errors in native conversion??
 	function rgbLuminanceDrop(rgb, luminanceDrop) {
@@ -70,8 +70,7 @@
 
 <style>
 	.spincontainer {
-		/* background-color: fuchsia; */
-		position: relative;
+		display:inline-block;
 		transform: rotateY(0deg);
 		animation-name: spinner;
 		animation-timing-function: linear;
@@ -79,6 +78,8 @@
 		animation-duration: 4s;
 		transform-style: preserve-3d;
 		width: 100%;
+		height: auto;
+		min-height: 8rem;
 	}
 
 	.spinlayer {
