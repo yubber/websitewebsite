@@ -1,5 +1,5 @@
 <script>
-
+	import SpinText from "$lib/components/SpinText.svelte";
 </script>
 
-<h1 class="spinheader">yubz' website</h1>
+<SpinText class="stretchroman text-8xl" RGB={[0,0,206]}>yubz' website</SpinText>

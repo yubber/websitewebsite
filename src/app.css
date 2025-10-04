@@ -1,6 +1,6 @@
+@import url(https://db.onlinewebfonts.com/c/c4540c0dbd7c6a2eae38e9ade0bb423d?family=Times+New+Roman+MT+Condensed);
 @import 'tailwindcss';
 
-global stretchroman {
-	font-family: 'Times New Roman', Times, serif;
-	
+.stretchroman {
+	font-family: 'Times New Roman MT Condensed', Times, serif;
 }
