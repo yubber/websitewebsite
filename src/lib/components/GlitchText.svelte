@@ -1,17 +1,25 @@
 <script>
-	const { class: className = '', ...rest } = $props();
+	const { class: className = '', href, data_text, children, ...rest} = $props();
 </script>
 
-<div class={`glitch layers glow ${className ?? ''}`} {...rest}>
-	<span>
-		<slot></slot>
-	</span>
+<div data-text={data_text} class={`glitch layers glow ${className ?? ''}`} {...rest}>
+	{#if href}
+		<a {href} data-text={data_text}>
+			{data_text}
+		</a>
+	{:else}
+		<span data-text={data_text}>
+			{data_text}
+		</span>
+	{/if}
 </div>
 
 <style>
 	/* https://codepen.io/mattgrosswork/pen/VwprebG */
 	.layers {
+		content: attr(data-text);
 		position: relative;
+		z-index: 2;
 	}
 
 	.layers::before,
@@ -20,6 +28,12 @@
 		position: absolute;
 		width: 110%;
 		z-index: -1;
+		display: none;
+	}
+
+	.layers:hover::before,
+	.layers:hover::after {
+		display: inline;
 	}
 
 	.layers::before {
@@ -453,13 +467,13 @@
 
 	/* https://codepen.io/chasebank/pen/qZNLyx */
 	@keyframes shift {
-  		0%,40%, 44%, 58%, 61%, 65%,69%,73%,100%{
+  		0%,30%, 34%, 58%, 61%, 65%,69%,73%,100%{
 			transform: skew(0deg);
 		}
-		41%{
+		31%{
 			transform: skew(10deg);
 		}
-		42%{
+		32%{
 			transform: skew(-10deg);
 		}
 		59%{
@@ -479,20 +493,49 @@
 		}
 	}
 
+	@keyframes gentleshift {
+  		0%,30%, 34%, 58%, 61%, 65%,69%,73%,100%{
+			transform: skew(0deg);
+		}
+		31%{
+			transform: skew(10deg);
+		}
+		32%{
+			transform: skew(-10deg);
+		}
+		59%{
+			transform: skew(15deg, 2deg);
+		}
+		60%{
+			transform: skew(-15deg, -2deg);
+		}
+		63%{
+			transform: skew(10deg, -1deg);
+		}
+		70%{
+			transform: skew(-15deg, -2deg);
+		}
+		71%{
+			transform: skew(10deg, -2deg);
+		}
+	}
+
 	.glitch:hover {
-		animation: shift 4s step-end infinite;
-		span {
+		animation: gentleshift 4s step-end infinite;
+		span, a {
 			animation: paths 5s step-end infinite;
 		}
 	}
 
-	.glitch::before {
+	.glitch:hover::before {
 		animation: paths 5s step-end infinite, opacity 5s step-end infinite,
+		/* shift 4s step-end infinite, */
 		font 8s step-end infinite, movement 10s step-end infinite;
 	}
 
-	.glitch::after {
+	.glitch:hover::after {
 		animation: paths 5s step-end infinite, opacity 5s step-end infinite,
+		/* shift 4s step-end infinite, */
 		font 7s step-end infinite, movement 8s step-end infinite;
 	}
 </style>

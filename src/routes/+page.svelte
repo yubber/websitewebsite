@@ -1,36 +1,38 @@
 <script>
 	import SpinText from "$lib/components/SpinText.svelte";
 	import GlitchText from "$lib/components/GlitchText.svelte";
+	import SlideshowContainer from "$lib/components/SlideshowContainer.svelte";
+
+	let projectsItems = ["code", "videos", "misc"];
 </script>
 
+<SlideshowContainer>
+	<div class="crt h-dvh overflow-hidden flex flex-col">
+		<div class="h-full flex place-content-center flex-col">
+			<SpinText class="stretchroman text-9xl mb-8" RGB={[10,10,249]}>yubz' website</SpinText>
 
-<div class="flex place-content-center flex-col h-svh">
-	<SpinText class="stretchroman text-9xl mb-8" RGB={[0,0,206]}>yubz' website</SpinText>
-
-	<div class="flex place-items-center items-start font-mono text-gray-100 lowercase justify-around w-full text-2xl">
-		<div>
-			<!-- maybe enable peer hover + -->
-			<GlitchText class="peer">
-				<span>projects</span>
-			</GlitchText>
-			<div class="text-m flex flex-col glow transition-all ease-in peer-hover:translate-y-0 translate-y-9 opacity-0 peer-hover:opacity-70">
-				<a href="#">code</a>
-				<a href="#">videos</a>
-				<a href="#">misc</a>
+			<div class="flex place-items-center items-start font-mono text-gray-100 lowercase justify-around w-full text-2xl">
+				<div>
+					<!-- maybe enable peer hover + -->
+					<GlitchText class="peer" data_text="projects"></GlitchText>
+					<div class="text-m dropdownContainer glow">
+						{#each projectsItems as item, i}
+							<a href="/projects/{item}" class="dropdownItem" style="transition-delay: {i * 0.1}s">
+								{item}
+							</a>
+						{/each}
+					</div>
+				</div>
+				<GlitchText class="hovergrow" href="/pets" data_text="pets"></GlitchText>
+				<GlitchText class="hovergrow" href="/about" data_text="about"></GlitchText>
 			</div>
 		</div>
-		<GlitchText class="hovergrow">
-			<a href="">accolades</a>
-		</GlitchText>
-		<GlitchText class="hovergrow">
-			<a href="">my rabbit</a>
-		</GlitchText>
-		<GlitchText class="hovergrow">
-			<a href="">about</a>
-		</GlitchText>
-		<GlitchText class="hovergrow">
-			<a href="">contact</a>
-		</GlitchText>
+		<div class="text-center text-gray-100 text-sm text-shadow-lg">
+			&copy; 2025 yubz (ys) | this site contains no ai generated assets. you are not allowed to train ai models on this site's content. | <a href="https://github.com/yubber/websitewebsite">open source</a>
+		</div>
 	</div>
-</div>
+</SlideshowContainer>
 
+<style>
+	@import 'tailwindcss';
+</style>

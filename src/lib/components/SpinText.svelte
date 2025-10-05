@@ -75,7 +75,12 @@
 		animation-name: spinner;
 		animation-timing-function: linear;
 		animation-iteration-count: infinite;
-		animation-duration: 4s;
+		@media (prefers-reduced-motion: no-preference) {
+			animation-duration: 4s;
+		}
+		@media (prefers-reduced-motion: reduce) {
+			animation-duration: 40s;
+		}
 		transform-style: preserve-3d;
 		width: 100%;
 		height: auto;
