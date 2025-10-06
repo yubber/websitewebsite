@@ -4,8 +4,12 @@
 @custom-variant hocus (&:hover, &:focus);
 @custom-variant hocus-within (&:hover, &:focus, &:focus-within);
 
-* {
+/* * { this fucks the 3d text colors because ???
 	color: whitesmoke;
+} */
+
+@theme {
+	--color-BodyColor: #f3f4f6;
 }
 
 .stretchroman {
@@ -214,7 +218,7 @@
 	--lst: 0, transparent 100%, #383d41;
 	--set: bottom 1.25em/ 0.625em 0.625em no-repeat padding-box;
 	background: radial-gradient(var(--ini) 100% var(--lst)) left 0 var(--set), radial-gradient(var(--ini) 0 var(--lst)) right 0 var(--set), linear-gradient(#64686a, #45494d 50%, #383d41 0) padding-box, linear-gradient(#2e3034, #1e2024) border-box;
-	color: #e9eae9;
+	/* color: #e9eae9; */
 	font: inherit;
 	text-shadow: 1px 1px #434343, 1px 1px 3px #323232;
 	&:active {

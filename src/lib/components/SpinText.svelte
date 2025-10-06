@@ -1,10 +1,10 @@
 <script>
 	import Text3D from "./Text3D.svelte";
-	let { layers=8, gapPx=2, RGB=[220,220,220], lumDrop=0.0055, class: className = '', children, ...rest } = $props();
+	let { layers=8, gapPx=2, brightnessDrop=null, class: className = '', children, ...rest } = $props();
 </script>
 
-<div class={`spincontainer ${className}`} {...rest}>
-	<Text3D {layers} {gapPx} {RGB} {lumDrop}>
+<div class="spincontainer">
+	<Text3D {layers} {gapPx} {brightnessDrop} {...rest} class={className}>
 		{@render children()}
 	</Text3D>
 </div>

@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from "svelte";
 
-	let {interval=1000, class: className = '',
+	let {interval=1000, class: className = '', brightness=100,
 		slides=[{
 			url: "url(https://frutigeraeroarchive.org/images/wallpapers/materialdictionary206/materialdictionary206_15.jpg)",
 			styles: "bg-cover bg-no-repeat"
@@ -42,7 +42,7 @@
 
 <div class="{slides[i].styles} {className}"
 	style="background-image: {slides[i].url}">
-	<div class="backdrop-filter backdrop-brightness-60 w-full h-full">
+	<div class="backdrop-filter w-full h-full" style="backdrop-filter: brightness({brightness}%)">
 		<slot></slot>
 	</div>
 </div>
