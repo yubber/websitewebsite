@@ -8,8 +8,8 @@
 
 <SlideshowContainer>
 	<div class="crt h-dvh overflow-hidden flex flex-col">
-		<div class="h-full flex place-content-center flex-col">
-			<SpinText class="stretchroman text-9xl mb-8" RGB={[10,10,249]}>yubz' website</SpinText>
+		<div class="h-full flex place-content-center justify-center flex-col">
+			<SpinText class="stretchroman text-7xl" RGB={[10,10,249]}>yubz' website</SpinText>
 
 			<div class="flex place-items-center items-start font-mono text-gray-100 lowercase justify-around w-full text-2xl">
 				<div>
@@ -17,13 +17,14 @@
 					<GlitchText class="peer" data_text="projects"></GlitchText>
 					<div class="text-m dropdownContainer glow">
 						{#each projectsItems as item, i}
-							<a href="/projects/{item}" class="dropdownItem" style="transition-delay: {i * 0.1}s">
+							<a href="/projects/{item}" class="dropdownItem" style="transition-delay: {i * 0.05}s">
 								{item}
 							</a>
 						{/each}
 					</div>
 				</div>
 				<GlitchText class="hovergrow" href="/pets" data_text="pets"></GlitchText>
+				<GlitchText class="hovergrow" href="/shrines" data_text="shrines"></GlitchText>
 				<GlitchText class="hovergrow" href="/about" data_text="about"></GlitchText>
 			</div>
 		</div>

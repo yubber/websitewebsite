@@ -523,7 +523,9 @@
 	.glitch:hover {
 		animation: gentleshift 4s step-end infinite;
 		span, a {
-			animation: paths 5s step-end infinite;
+			@media (prefers-reduced-motion: no-preference) {
+				animation: paths 5s step-end infinite;
+			}
 		}
 	}
 

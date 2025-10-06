@@ -4,6 +4,10 @@
 @custom-variant hocus (&:hover, &:focus);
 @custom-variant hocus-within (&:hover, &:focus, &:focus-within);
 
+* {
+	color: whitesmoke;
+}
+
 .stretchroman {
 	font-family: 'Times New Roman MT Condensed', Times, serif;
 }
@@ -197,4 +201,26 @@
 }
 .crt-text {
 	animation: textShadow 1.6s infinite;
+}
+
+.retrobutton {
+	box-sizing: content-box;
+	border: solid 3px transparent;
+	height: 2.5em;
+	padding: 0 0.75em;
+	border-radius: 1em;
+	box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.2), inset 0 -1.25em 1.25em -1.25em #494b4f;
+	--ini: circle farthest-side at;
+	--lst: 0, transparent 100%, #383d41;
+	--set: bottom 1.25em/ 0.625em 0.625em no-repeat padding-box;
+	background: radial-gradient(var(--ini) 100% var(--lst)) left 0 var(--set), radial-gradient(var(--ini) 0 var(--lst)) right 0 var(--set), linear-gradient(#64686a, #45494d 50%, #383d41 0) padding-box, linear-gradient(#2e3034, #1e2024) border-box;
+	color: #e9eae9;
+	font: inherit;
+	text-shadow: 1px 1px #434343, 1px 1px 3px #323232;
+	&:active {
+		filter: brightness(0.5);
+		box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.849), inset 0 -1.25em 1.25em -1.25em #494b4f;
+		/* border-top: 1px; */
+		/* background: radial-gradient(var(--lst) 100% var(--ini)) left 0 var(--set), radial-gradient(var(--lst) 0 var(--ini)) right 0 var(--set), linear-gradient(#64686a, #45494d 50%, #383d41 0) padding-box, linear-gradient(#2e3034, #1e2024) border-box; */
+	}
 }
