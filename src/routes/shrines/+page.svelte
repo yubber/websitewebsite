@@ -103,8 +103,9 @@
 				animation-name: to-title;
 				animation-timeline: --musicScroll;
 				transition: all;
-				animation-fill-mode: both;
-				animation-range: entry 0% 50%;
+				animation-fill-mode: forwards;
+				animation-timing-function: ease-in;
+				animation-range: exit;
 			}
 		}
 	}
@@ -120,16 +121,12 @@
 
 	@keyframes to-title {
 		from {
-			position: relative;
-			top: 0;
-			left: 0;
+			translate: 0 0;
 			scale: 100% 100%;
 			color: var(--color-BodyColor);
 		}
 		to {
-			position:fixed;
-			top: 50%;
-			left: 50%;
+			translate: 50vw -50vh;
 			scale: 150% 250%;
 			color: var(--color-pink-900);
 		}

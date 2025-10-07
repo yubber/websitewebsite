@@ -26,6 +26,9 @@
 		},{
 			url: "url(https://thegardenofmadeline.neocities.org/gifs/wiirotation_gif.gif)",
 			styles: "bg-contain bg-no-repeat bg-center"
+		},{
+			url: "url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%2Fid%2FOIP.bOI6rgHK3i0bk7BbL0b0GQHaD4%3Fcb%3D12%26pid%3DApi&f=1&ipt=53e57f85b486e30b7afceb0b6b8ae7640626051e21758154c71e1447069b645d)",
+			styles: "bg-contain bg-no-repeat bg-center"
 		}], extraSlides=[],
 		children, ...rest } = $props()
 
