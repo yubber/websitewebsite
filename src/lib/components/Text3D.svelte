@@ -1,6 +1,6 @@
 <script>
 	let { layers=8, gapPx=2, brightnessDrop=null, class: className = '', firstZ=0, children, ...rest } = $props();
-	if (!brightnessDrop){
+	if (brightnessDrop === null){
 		brightnessDrop = 80/layers;
 	}
 </script>

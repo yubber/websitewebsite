@@ -42,7 +42,7 @@
 
 <div style="translate: 0% -100%;">
 	<!-- create box unaffected by scaling -->
-	<div class="invisible">
+	<div class={`invisible ${className}`}>
 		{@render children()}
 	</div>
 	<div
