@@ -21,7 +21,7 @@
 		}
 	}
 	div.popout {
-		z-index: -10;
+		/* z-index: -10; */
 		max-height: 0;
 		transition: all 150ms ease-in-out;
 		animation-direction: alternate;

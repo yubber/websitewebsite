@@ -2,12 +2,11 @@
 	import { onMount } from 'svelte';
 	import Text3D from './Text3D.svelte';
 
-	let {children, class: className = '', ...rest} = $props()
+	let {children, scalar=0.03, class: className = '', ...rest} = $props()
 
 	let element;
 	let rotationX = $state(0);
 	let rotationY = $state(0);
-	let scalar = $state(0.03)
 
 	const handleMouseMove = (event) => {
 		const rect = element.getBoundingClientRect();
@@ -34,24 +33,17 @@
 <style>
 	.rotating-box {
 		transform-style: preserve-3d;
-		transition: transform 0.1s ease-out;
-		vertical-align: middle;
-		display: inline-block;
+		/* perspective-origin: 1000px; */
 	}
 </style>
 
-<div style="translate: 0% -100%;">
-	<!-- create box unaffected by scaling -->
-	<div class={`invisible ${className}`}>
+<!-- some of the classes in the parent div are load bearing... god knows why -->
+<div
+bind:this={element}
+	class={`rotating-box align-middle flex items-center justify-between ${className}`}
+	style="transform: rotateX({rotationX*2}deg) rotateY({rotationY*2}deg);"
+>
+	<Text3D  {...rest}>
 		{@render children()}
-	</div>
-	<div
-	bind:this={element}
-		class="rotating-box align-middle flex items-center justify-between"
-		style="transform: rotateX({rotationX*2}deg) rotateY({rotationY*2}deg);"
-	>
-		<Text3D {...rest} class={className}>
-			{@render children()}
-		</Text3D>
-	</div>
+	</Text3D>
 </div>

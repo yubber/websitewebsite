@@ -1,3 +1,8 @@
+<script>
+	import FacingText3D from "$lib/components/FacingText3D.svelte";
+    import SpinText from "$lib/components/SpinText.svelte";
+</script>
+
 <style type="text/css">
 
 	@keyframes progress {
@@ -234,3 +239,10 @@
 </div>
 
 <div>* Look at CSS, there are some mixed examples that contain both shorthand and longhands</div>
+
+<FacingText3D layers={12} gapPx={2} scalar={0.04} brightnessDrop={2} class="font-sans text-pink-500 text-7xl absolute">
+					u u uwa uwa
+				</FacingText3D>
+<SpinText layers={12} gapPx={2} scalar={0.04} brightnessDrop={2} class="font-sans text-pink-500 text-7xl">
+					u u uwa uwa
+				</SpinText>

@@ -25,7 +25,7 @@
 
 <style>
 	.container3d{
-		display: inline-block;
+		display: inline;
 		transform-style: preserve-3d;
 		width: fit-content;
 		/*load bearing*/
