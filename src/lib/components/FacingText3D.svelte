@@ -40,10 +40,10 @@
 <!-- some of the classes in the parent div are load bearing... god knows why -->
 <div
 bind:this={element}
-	class={`rotating-box align-middle flex items-center justify-between ${className}`}
+	class={`rotating-box align-middle flex items-center justify-between`}
 	style="transform: rotateX({rotationX*2}deg) rotateY({rotationY*2}deg);"
 >
-	<Text3D  {...rest}>
+	<Text3D class={className} {...rest}>
 		{@render children()}
 	</Text3D>
 </div>
