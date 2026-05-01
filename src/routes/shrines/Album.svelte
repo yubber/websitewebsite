@@ -125,6 +125,9 @@
 		width: 50%;
 		height: 90%;
 		transform: translateX(0);
+		/* scale: 0.67; */
+		/* font-size: 1.5em; */
+		-webkit-font-smoothing: subpixel-antialiased;
 	}
 	.backImg {
 		width:100%;

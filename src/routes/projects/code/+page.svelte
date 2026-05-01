@@ -34,6 +34,23 @@
 			</div>
 		</div>
 	</div>
+	<div id="games">
+		<h1>mauga nipple pve</h1>
+		<p>Mauga nipple pve is a popular custom game made using the Overwatch Workshop. Its <a href="https://x.com/MaugaNipplePVE">twitter fan account</a> has over 3k followers.
+			The workshop is quite limiting in performance and functionality, so I had to work around that.
+		</p>
+		<h2>game design</h2>
+		<p>In order to exact my revenge on the playerbase, I had to make an extremely addictive game that suited them. From experience as a player and developer, I noticed:</p>
+		<ul>
+			<li>People are unwilling to learn games that don't involve the standard FPS gameplay</li>
+			<li>They stay much longer on easy games, and almost immediately leave when they see the defeat screen</li>
+			<li>They don't mind playing mind-numbingly easy games, even when it's just shooting enemies with no lose condition</li>
+			<li>They don't read</li>
+		</ul>
+		<h2>problem solving</h2>
+		<h3>enemy quantity</h3>
+		<p>I wanted the game to have a large number of enemies in order to achieve the kind of brainrot gameplay I envisioned. To mitigate the performance impact of having many bots with their own logic, I used a map with simple geometry so that the pathfinding could be extremely low cost. I also</p>
+	</div>
 </SlideshowContainer>
 
 <style>

@@ -1,5 +1,6 @@
 <script>
 	import SlideshowContainer from "$lib/components/SlideshowContainer.svelte";
+	import Scramble from "$lib/components/Scramble.svelte";
 	import FacingText3D from "$lib/components/FacingText3D.svelte";
 	import SpinText from "$lib/components/SpinText.svelte";
 	import Album from "./Album.svelte";
@@ -73,8 +74,8 @@
 						<svg class="absolute w-full h-full z-0 overflow-clip" xmlns="http://www.w3.org/2000/svg">
 							<filter id="candy" y='0%' width="100%" height="100%" opacity="0.2">
 								<feTurbulence baseFrequency="0.011" stitchTiles="stitch"/>
-								<!-- <animate attributeName="x" from="0%" to="100%" dur="5s" repeatCount="indefinite"/> -->
-								<!-- <animate attributeName="baseFrequency" from="0.01" to="0.02" dur="5s" repeatCount="indefinite"/> -->
+								<!-- <animate attributeName="x" from="0%" to="100%" dur="5s" repeatCount="indefinite"/>
+								<animate attributeName="baseFrequency" from="0.01" to="0.02" dur="5s" repeatCount="indefinite"/> -->
 							</filter>
 							<rect width="200%" height="100%" filter="url(#candy)"></rect>
 						</svg>
@@ -87,7 +88,7 @@
 					{/snippet}
 					{#snippet slideout()}
 						<p class="p-4 bg-[#c9a1dd] h-full overflow-scroll">
-							NOBODY DOES IT LIKE HER!!! everything about this album feels like it's from some utopian future, from the visuals to the sound design. it's stuffed full of bangers, though some of the rap parts can feel a bit out of place. i guess it's punishment for leaking xcx world.
+							NOBODY DOES IT LIKE HER!!! everything about this album feels like it's from some utopian future, from the visuals to the sound design. it's stuffed full of bangers, though some of the rap parts can feel a bit out of place. my personal theory is that it's punishment for leaking xcx world.
 						</p>
 					{/snippet}
 				</Album>
@@ -101,7 +102,7 @@
 					{/snippet}
 					{#snippet slideout()}
 						<p class="p-4 stretchroman bg-gray-200 h-full overflow-scroll">
-							This is the most perfect time capsule of how I experienced the internet growing up. Most people chasing the "y2k" aesthetic do it in a way that just isn't online enough, and it's hard to relate to because I was a child and also living nowhere near those subcultures. But Nina is so intimately familiar with the Internet at the time, and every little detail in this era just violently flings my brain down memory lane. As for the music itself, it feels like a more self-aware, less cheesy and more personal iteration of the EDM of that era. Which I was also a fan of as a kid. As a side note, I really appreciate her visionary use of Times New Roman.
+							this is the most perfect time capsule of how i experienced the internet growing up. most people chasing the "y2k" aesthetic do it in a way that just isn't online enough, and it's hard to relate to because i was just a kid on the internet nowhere near those subcultures. but nina is so intimately familiar with the internet at the time, and the visuals and lyrics violently fling me down memory lane. as for the music itself, it feels like a more self-aware, less cheesy and more personal iteration of the edm that i was eating up as a kid. i also really appreciate her visionary use of times new roman. it's like the brat font for people who "wanna <Scramble len={4}></Scramble> their computer".
 						</p>
 					{/snippet}
 				</Album>
@@ -113,13 +114,16 @@
 
 			chiikawa
 			I normally only enjoy this sort of hyper-cutesy franchise stuff in a half-ironic way because it feels too consumerist to get into it fully. But this show has a very childlike innocence and simplicity that makes me really sincerely enjoy it. I also really, really like watching those Chinese animations where the characters act in really stupid ways. <a href="https://www.instagram.com/nb666sb520/">This account is my favorite.</a> The animation quality is really good and it pioneered a lot of the trends that other creators copied, like 拉长耳朵 and making the characters cartoonishly jiggly.
+
+			mpgis
+			It's a product of its time, being one of many shows with extremely edgy humor. But unlike many other of those shows, it's actually aged incredibly well. 
 		</div>
 		<div id="pets" class="h-lvh text-BodyColor">
 			yubber
-			He was my first rabbit. We adopted him as a baby, from someone who neglected to spay their own rabbits. I was young when we had him, so there was a lot to be improved about how we cared for him. He normally doesn't like being touched, so my most treasured memory of him is when he weakly nudged my hand to ask for pets during his final days.
+			He was my first rabbit. We adopted him as a baby, from someone who neglected to spay their own rabbits. I was young when we had him, so there was a lot to be improved about how we cared for him. He hated being touched, so my most treasured memory of him is when he weakly nudged my hand to ask for pets during his final days.
 
 			bit bit
-			My current rabbit. May he live long and happy. He's a total brat though. He's potty trained, but I swear he pees on the floor in front of me whenever he's angry for whatever reason. He loves being rubbed on the head, but will do everything in his power to avoid being picked up. It's impossible to stay mad at him though, he's practically engineered for maximum cuteness.
+			My current rabbit. May he live long and happy. He's a total brat though. He's potty trained, but I swear he pees on the floor in front of me whenever he's angry just to spite me. He loves being rubbed on the head, but will do everything in his power to avoid being picked up. It's impossible to stay mad at him though, he's practically engineered for maximum cuteness.
 		</div>
 		<div id="childhood" class="h-lvh text-BodyColor">
 			https://www.eyezmaze.com/
