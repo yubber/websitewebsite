@@ -1,16 +1,18 @@
 <script>
 	import Text3D from "./Text3D.svelte";
-	let { layers=8, gapPx=2, brightnessDrop=null, class: className = '', children, ...rest } = $props();
+	let { class: className = '', children, ...rest } = $props();
 </script>
 
 <div class="spincontainer">
-	<Text3D {layers} {gapPx} {brightnessDrop} {...rest} class={className}>
+	<Text3D {...rest} class={className}>
 		{@render children()}
 	</Text3D>
 </div>
 
 <style>
 	.spincontainer {
+		transform-style: preserve-3d;
+		perspective: 4562px;
 		transform: rotateY(0deg);
 		animation-name: spinner;
 		animation-timing-function: linear;
