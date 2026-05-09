@@ -24,12 +24,14 @@
 				particles[i].tick();
 			}
 
-			for (let i = 0; i < 80; i++){
-				new Particle(Math.floor(window.innerWidth * window.devicePixelRatio * Math.random() / 8) * 8 + 2,
-					Math.floor(window.innerHeight * window.devicePixelRatio * Math.random() / 8) * 8, ctx)
-			}
-     	}, 30);
+			// for (let i = 0; i < 20; i++){
+			// 	new Particle(Math.floor(window.innerWidth * window.devicePixelRatio * Math.random() / 8) * 8 + 2,
+			// 		Math.floor(window.innerHeight * window.devicePixelRatio * Math.random() / 8) * 8, ctx)
+			// }
+     	}, 80);
 	})
+
+	let [pSpacing, pSize] = [9, 2.5]
 
 	class Particle {
 		constructor(x, y, context){
@@ -44,11 +46,15 @@
 		}
 
 		tick(){
-			this.lifeLeft-= 30
+			this.lifeLeft-= 80
 			if (this.lifeLeft >= 0){
 				this.ctx.beginPath()
 				this.ctx.fillStyle = "#0000ff"
-				this.ctx.fillRect(this.x, this.y, 2,2)
+				this.ctx.fillRect(this.x, this.y, pSize,pSize)
+				if (this.lifeLeft < 500) {
+					this.x += pSpacing * Math.round((Math.random() - 0.5) * 3)
+					this.y += pSpacing * Math.round((Math.random() - 0.5) * 3)
+				}
 			} else {
 				delete particles[this.i]
 			}
@@ -56,9 +62,9 @@
 	}
 
 	let offsetCache = []
-	for (let x = -56; x <=56; x += 8){
-		for (let y = -56; y <=56; y += 8){
-			if (x**2 + y**2 <= 52**2) {
+	for (let x = -pSpacing*8; x <=pSpacing*8; x += pSpacing){
+		for (let y = -pSpacing*8; y <=pSpacing*8; y += pSpacing){
+			if (x**2 + y**2 <= (pSpacing*6.2)**2) {
 				offsetCache.push([x,y])
 			}
 		}
@@ -66,7 +72,7 @@
 
 	let genParticles = () => {
 		for (const [x, y] of offsetCache) {
-			new Particle(x + Math.floor(event.clientX / 8) * 8 + 2, y + Math.floor(event.clientY / 8) * 8, ctx)
+			new Particle(x + Math.floor(event.clientX / pSpacing) * pSpacing + 2, y + Math.floor(event.clientY / pSpacing) * pSpacing, ctx)
 		}
 	}
 

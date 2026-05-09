@@ -31,6 +31,7 @@
 		text-align: center;
 		backface-visibility: visible;
 		white-space: normal;
+		user-select: none;
 
 		> div:first-child {
 			position: relative;

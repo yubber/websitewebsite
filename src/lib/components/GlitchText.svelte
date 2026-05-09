@@ -1,5 +1,13 @@
 <script>
+    import { onMount } from "svelte";
+
 	const { class: className = '', href, data_text, children, ...rest} = $props();
+
+	onMount(()=>{
+		if (children) {
+			console.warn("GlitchText doesn't render children. use the data_text attribute for text.")
+		}
+	})
 </script>
 
 <div data-text={data_text} class={`glitch layers glow ${className ?? ''}`} {...rest}>
