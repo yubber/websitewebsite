@@ -52,8 +52,8 @@
 				this.ctx.fillStyle = "#0000ff"
 				this.ctx.fillRect(this.x, this.y, pSize,pSize)
 				if (this.lifeLeft < 500) {
-					this.x += pSpacing * Math.round((Math.random() - 0.5) * 3)
-					this.y += pSpacing * Math.round((Math.random() - 0.5) * 3)
+					this.x += pSpacing * Math.round((Math.random() - 0.5) * 5)
+					this.y += pSpacing * Math.round((Math.random() - 0.5) * 5)
 				}
 			} else {
 				delete particles[this.i]

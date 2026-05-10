@@ -2,20 +2,31 @@
 	let {children} = $props()
 </script>
 
-<div class="h-[100vh] w-[100vw] bg-[#4f86af] text-blue-100 text-4xl">
-	<h1>
-		{@render children()}
-	</h1>
-	<span id="float1">
-		{@render children()}
-	</span>
-	<span id="float2">
-		{@render children()}
-	</span>
+<div id="outer">
+	<div>
+		<h1>
+			{@render children()}
+		</h1>
+		<span id="float1">
+			{@render children()}
+		</span>
+		<span id="float2">
+			{@render children()}
+		</span>
+	</div>
 </div>
 
 <style>
-	div > * {
+	#outer {
+		position: relative;
+		height: 100%;
+		width: 100%;
+		background-color: #4f86af;
+		color: var(--color-blue-100);
+		font-size: var(--text-4xl);
+		overflow: hidden;
+	}
+	#outer > div > * {
 		user-select: none;
 		cursor: default;
 		font-family: "Comic Sans MS", cursive;
