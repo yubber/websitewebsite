@@ -63,10 +63,12 @@
 			<img src={widgetblack} alt="">
 		</SpinText>
 		{#each [...Array(5).keys()] as i}
-			<div>
-
+			<div class="particles">
+				<Text3D>
+					<img src= alt="" srcset="">
+				</Text3D>
 			</div>
-	{/each}
+		{/each}
 	</div>
 </div>
 </div>
