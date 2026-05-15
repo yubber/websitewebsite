@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from "svelte"
+	let {pSpacing = 9, tickDelay = 60, pSize = 2.5} = $props()
 	var canvas, ctx
 	var particles = {} // easier mgmt than array?
 	var particleIndex = 0
@@ -28,10 +29,8 @@
 			// 	new Particle(Math.floor(window.innerWidth * window.devicePixelRatio * Math.random() / 8) * 8 + 2,
 			// 		Math.floor(window.innerHeight * window.devicePixelRatio * Math.random() / 8) * 8, ctx)
 			// }
-     	}, 80);
+     	}, tickDelay);
 	})
-
-	let [pSpacing, pSize] = [9, 2.5]
 
 	class Particle {
 		constructor(x, y, context){
@@ -46,7 +45,7 @@
 		}
 
 		tick(){
-			this.lifeLeft-= 80
+			this.lifeLeft-= tickDelay
 			if (this.lifeLeft >= 0){
 				this.ctx.beginPath()
 				this.ctx.fillStyle = "#0000ff"
@@ -64,7 +63,7 @@
 	let offsetCache = []
 	for (let x = -pSpacing*8; x <=pSpacing*8; x += pSpacing){
 		for (let y = -pSpacing*8; y <=pSpacing*8; y += pSpacing){
-			if (x**2 + y**2 <= (pSpacing*6.2)**2) {
+			if (x**2 + y**2 <= (pSpacing*6)**2) {
 				offsetCache.push([x,y])
 			}
 		}
