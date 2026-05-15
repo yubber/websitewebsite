@@ -10,6 +10,9 @@
 	import SpinText from "$lib/components/SpinText.svelte";
 	let titleContainerOuter, titleContainerInner
 
+	import widget from "$lib/assets/face+black+transparent.png"
+	import pop2 from "$lib/assets/pop2.png"
+
 	onMount(()=>{
 		gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
@@ -31,6 +34,13 @@
 		titleTl.to(titleContainerInner, {rotateY: 360, scale: 0.5})
 	})
 
+	let albumData = [{
+		name: "",
+		cover: "",
+		particles: "",
+		bgThing: ""
+		}
+	]
 </script>
 <!-- <boody> -->
 
@@ -52,6 +62,11 @@
 		<SpinText>
 			<img src={widgetblack} alt="">
 		</SpinText>
+		{#each [...Array(5).keys()] as i}
+			<div>
+
+			</div>
+	{/each}
 	</div>
 </div>
 </div>
