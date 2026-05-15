@@ -7,6 +7,9 @@
 	import { ScrollSmoother } from "gsap/all";
 	let titleContainerOuter, titleContainerInner
 
+	import widget from "$lib/assets/face+black+transparent.png"
+	import pop2 from "$lib/assets/pop2.png"
+
 	onMount(()=>{
 		gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
@@ -29,6 +32,14 @@
 		titleTl.to(titleContainerInner, {rotateY: 360, scale: 0.5})
 	})
 
+	let albumData = [{
+		name: "",
+		cover: "",
+		particles: "",
+		bgThing:
+		}
+	]
+
 	// let scrollTl = gsap.timeline({
 	// 	scrollTrigger: {
 	// 		trigger:
@@ -50,7 +61,11 @@
 
 <div class="h-[100vh]">
 	I Love My Computer
-	
+	{#each [...Array(5).keys()] as i}
+		<div>
+
+		</div>
+	{/each}
 </div>
 
 <!-- </boody> -->
