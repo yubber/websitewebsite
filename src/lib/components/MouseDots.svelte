@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from "svelte"
-	let {pSpacing = 9, tickDelay = 60, pSize = 2.5} = $props()
+	let {pSpacing = 9, tickDelay = 60, pSize = 2.5, xOffset = 0, yOffset = 0} = $props()
 	var canvas, ctx
 	var particles = {} // easier mgmt than array?
 	var particleIndex = 0
@@ -71,7 +71,7 @@
 
 	let genParticles = () => {
 		for (const [x, y] of offsetCache) {
-			new Particle(x + Math.floor(event.clientX / pSpacing) * pSpacing + 2, y + Math.floor(event.clientY / pSpacing) * pSpacing, ctx)
+			new Particle(x + Math.floor((event.clientX + xOffset) / pSpacing) * pSpacing + 2, y + Math.floor((event.clientY + yOffset) / pSpacing) * pSpacing, ctx)
 		}
 	}
 

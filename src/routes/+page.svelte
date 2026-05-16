@@ -22,7 +22,7 @@
 	}]
 </script>
 
-<MouseDots></MouseDots>
+<MouseDots xOffset={15} yOffset={25}></MouseDots>
 
 <div class="h-dvh overflow-hidden flex flex-col darkxpbg">
 	<div class="h-full flex place-content-center justify-center flex-col">
