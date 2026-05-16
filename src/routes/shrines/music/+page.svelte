@@ -30,9 +30,18 @@
 				start: "top top",
 				end: "bottom top",
 				scrub: 1,
+				onLeave: () => {
+					intentObserver.enable();
+					albumIndex = 0
+				},
+
+				onEnterBack: () => {
+					intentObserver.disable();
+					albumIndex = 0
+				}
 			}
 		})
-		titleTl.to(titleContainerInner, {rotateY: 360, scale: 0.5})
+		titleTl.fromTo(titleContainerInner, {rotateY: 0, scale: 1}, {rotateY: 360, scale: 0})
 
 		// create an observer and disable it to start
 		let intentObserver = ScrollTrigger.observe({
@@ -87,9 +96,6 @@
 			start: "top top",
 			end: "+=1",
 			onEnter: (self) => {
-				intentObserver.enable();
-				albumIndex = 0
-				changeAlbum(albumIndex + 1, true);
 			},
 			onEnterBack: () => {
 				intentObserver.enable();
@@ -117,25 +123,28 @@
 <div id="smooth-wrapper">
 	<div id="smooth-content">
 		<div id="titleContainerOuter" bind:this={titleContainerOuter}>
-			<div id="titleContainerInner" bind:this={titleContainerInner} class="h-full w-full">
+			<div id="titleContainerInner" bind:this={titleContainerInner}>
 				<MovieMakerTitle>
 					my favorite albums!!!!!
 				</MovieMakerTitle>
-			</div>
-			<div class="text-blue-100 absolute bottom-1 right-1 text-xl">
-				⇊
+				<div class="text-blue-100 absolute bottom-1 right-1 text-xl">
+					⇊
+				</div>
 			</div>
 		</div>
 
-		<div class="h-[100vh] absolute top-0 swipe-section">
-			<SpinText>
-				{albumData[albumIndex].name}
-			</SpinText>
-			{#each [...Array(10).keys()] as i (i)}
-				<div class="particles">
-
+		<div class="h-[100vh] bg-amber-800 z-1">
+			<div class="swipe-section">
+				<div class="absolute">
+					<img src={albumData[albumIndex] ? albumData[albumIndex].cover : ''} alt="Album art">
 				</div>
-			{/each}
+				{albumData[albumIndex] ? albumData[albumIndex].name : ''}
+				{#each [...Array(10).keys()] as i (i)}
+					<div class="particles">
+
+					</div>
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>
@@ -143,12 +152,15 @@
 <!-- </boody> -->
 <style>
 	#titleContainerOuter {
-		height:100vh;
+		height:50vh;
 		backface-visibility: hidden;
 	}
 
 	#titleContainerInner {
 		position: absolute;
+		height:100vh;
+		width: 100vw;
+		top: 0px;
 	}
 
 	#smooth-content {

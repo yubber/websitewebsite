@@ -22,9 +22,9 @@
 	}]
 </script>
 
-<MouseDots xOffset={15} yOffset={25}></MouseDots>
+<MouseDots></MouseDots>
 
-<div class="h-dvh overflow-hidden flex flex-col darkxpbg">
+<div class="h-dvh flex flex-col darkxpbg">
 	<div class="h-full flex place-content-center justify-center flex-col">
 		<div class="stretchroman">
 			<SpinText class="text-[10rem] text-blue-700 cursor-default">yubz' website</SpinText>
@@ -68,6 +68,7 @@
 	}
 
 	.darkxpbg {
+		background-size: cover;
 		background:
         	/* top, transparent black, faked with gradient */
 			linear-gradient(
