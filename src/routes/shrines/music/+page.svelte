@@ -13,7 +13,7 @@
 
 	let titleContainerOuter, titleContainerInner, albumTitle, particles
 	let albumIndex = 0;
-	let animating;
+	let animating = $state();
 
 	import widget from "$lib/assets/face+black+transparent.png";
 
@@ -88,6 +88,11 @@
 				}
 			})
 
+			gsap.to(albumTitle, {
+				scrambleText: albumData[index].name,
+				duration: 0.75
+			})
+
 		}
 
 		// pin swipe section and initiate observer
@@ -139,7 +144,7 @@
 				<div class="w-[30%] m-auto flex flex-col items-center">
 					<StaticNoise class="w-full h-full absolute z-0"></StaticNoise>
 					<img src={
-						animating ? 'https://media1.tenor.com/m/88dnH_mHRLAAAAAC/static-tv-static.gif' :
+						animating ? 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGd2aGZiNHZqajE5ZDBsanFhbjIwY2puZTI2aG00ZTF6YXV5Nmd2aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xWlgutH3ZZF6w/giphy.gif' :
 						(albumData[albumIndex] ? albumData[albumIndex].cover : '')
 					} alt="Album art" width="100%">
 					<span bind:this={albumTitle}>
