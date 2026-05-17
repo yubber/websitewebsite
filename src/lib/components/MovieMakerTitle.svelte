@@ -1,8 +1,8 @@
 <script>
-	let {children} = $props()
+	let {children, className = ''} = $props()
 </script>
 
-<div id="outer">
+<div id="outer" class={className}>
 	<div>
 		<h1>
 			{@render children()}

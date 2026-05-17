@@ -5,18 +5,20 @@
 	import { gsap } from "gsap";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 	import { ScrollSmoother } from "gsap/all";
+	import ScrambleTextPlugin from "gsap/ScrambleTextPlugin";
 
 	import MovieMakerTitle from "$lib/components/MovieMakerTitle.svelte";
+	import StaticNoise from "$lib/components/StaticNoise.svelte";
 	import SpinText from "$lib/components/SpinText.svelte";
 
-	let titleContainerOuter, titleContainerInner, glitchOverlay, particles
-	let albumIndex = -1;
+	let titleContainerOuter, titleContainerInner, albumTitle, particles
+	let albumIndex = 0;
 	let animating;
 
 	import widget from "$lib/assets/face+black+transparent.png";
 
 	onMount(()=>{
-		gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+		gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrambleTextPlugin);
 
 		ScrollSmoother.create({
 			smooth: 0.3, // how long (in seconds) it takes to "catch up" to the native scroll position
@@ -41,7 +43,7 @@
 				}
 			}
 		})
-		titleTl.fromTo(titleContainerInner, {rotateY: 0, scale: 1}, {rotateY: 360, scale: 0})
+		titleTl.fromTo(titleContainerInner, {rotateY: 0, scale: 1}, {rotateY: '360deg', scale: 0})
 
 		// create an observer and disable it to start
 		let intentObserver = ScrollTrigger.observe({
@@ -66,24 +68,23 @@
 				(index === -1 && !isScrollingDown)
 			) {
 				animating = false;
-				isScrollingDown && intentObserver.disable();
+				intentObserver.disable();
 				return;
 			}
 
-			gsap.to(glitchOverlay, {
-				visibility: "visible",
-				duration: 0.75,
-				onComplete: () => {
-					animating = false;
-				}
-			});
-
-			gsap.to(particles, {
-				rotateY: 90,
+			gsap.fromTo(particles,
+				{rotateY: 0},
+				{rotateY: 90,
 				duration: 0.375,
 				onComplete: () => {
 					albumIndex = index
-
+					gsap.to(particles, {
+						rotateY: 180,
+						duration: 0.375,
+						onComplete: () => {
+							animating = false
+						}
+					})
 				}
 			})
 
@@ -109,12 +110,12 @@
 	let albumData = [{
 		name: "I Love My Computer",
 		artist: "Ninajirachi",
-		cover: "",
+		cover: "https://upload.wikimedia.org/wikipedia/en/d/dd/I_Love_My_Computer_by_Ninajirachi.png",
 		particles: widget,
 	},{
 		name: "how i'm feeling now",
 		artist: "Charli xcx",
-		cover: "",
+		cover: "https://upload.wikimedia.org/wikipedia/en/b/bd/Charli_XCX_-_How_I%27m_Feeling_Now.png",
 		particles: ""
 	}]
 </script>
@@ -133,15 +134,21 @@
 			</div>
 		</div>
 
-		<div class="h-[100vh] bg-amber-800 z-1">
-			<div class="swipe-section">
-				<div class="absolute">
-					<img src={albumData[albumIndex] ? albumData[albumIndex].cover : ''} alt="Album art">
+		<div class="h-[100vh] bg-blue-100 relative">
+			<div class="swipe-section h-full flex">
+				<div class="w-[30%] m-auto flex flex-col items-center">
+					<StaticNoise class="w-full h-full absolute z-0"></StaticNoise>
+					<img src={
+						animating ? 'https://media1.tenor.com/m/88dnH_mHRLAAAAAC/static-tv-static.gif' :
+						(albumData[albumIndex] ? albumData[albumIndex].cover : '')
+					} alt="Album art" width="100%">
+					<span bind:this={albumTitle}>
+						{albumData[albumIndex][0]?.name}
+					</span>
 				</div>
-				{albumData[albumIndex] ? albumData[albumIndex].name : ''}
 				{#each [...Array(10).keys()] as i (i)}
-					<div class="particles">
-
+					<div class="particles absolute w-2">
+						<img src={albumData[albumIndex] ? albumData[albumIndex].particles : ''} alt="">
 					</div>
 				{/each}
 			</div>
@@ -152,8 +159,10 @@
 <!-- </boody> -->
 <style>
 	#titleContainerOuter {
-		height:50vh;
+		height:30vh;
 		backface-visibility: hidden;
+		z-index: 9;
+		position: relative;
 	}
 
 	#titleContainerInner {
