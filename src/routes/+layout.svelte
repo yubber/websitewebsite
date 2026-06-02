@@ -24,12 +24,16 @@
 
 <div
   id="cursorfollow"
-  style="transform: translate({x}px, {y}px);"
+  style="transform: translate({x}px, {y}px); mix-blend-mode: exclusion;"
 >
 	<img src={girledm} alt="" srcset="">
 </div>
 
 <style>
+	* {
+		font-family: Arial, Helvetica, sans-serif;
+	}
+
   #cursorfollow {
     position: fixed;
     top: 0;

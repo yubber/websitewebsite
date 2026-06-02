@@ -16,7 +16,6 @@
 		const offsetX = event.clientX - centerX;
 		const offsetY = event.clientY - centerY;
 
-		// swap because idfk man
 		rotationY = offsetX * scalar;
 		rotationX = -offsetY * scalar;
 	};
