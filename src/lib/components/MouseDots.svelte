@@ -1,12 +1,12 @@
 <script>
 	import { onMount } from "svelte"
-	let {pSpacing = 9, tickDelay = 60, pSize = 2.5, xOffset = 0, yOffset = 0} = $props()
+	let {pSpacing = 9, tickDelay = 60, pSize = 2.5, xOffset = 0, yOffset = 0, z=0} = $props()
 	var canvas, ctx
 	var particles = {} // easier mgmt than array?
 	var particleIndex = 0
 
 	/* todo
-	- detect duplicate particle positions
+	- optimize duplicate particle positions
 	*/
 
 	onMount(()=>{
@@ -79,7 +79,7 @@
 
 <svelte:window onmousemove={genParticles}></svelte:window>
 
-<canvas id="mousePoo"
+<canvas id="mousePoo" style="--z-prop:{z}"
 	bind:this={canvas}
 	>
 </canvas>
@@ -89,5 +89,6 @@
 		width: 100vw;
 		height: 100vh;
 		position: absolute;
+		z-index: var(--z-prop);
 	}
 </style>

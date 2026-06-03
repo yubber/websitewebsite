@@ -10,13 +10,14 @@
 	import MovieMakerTitle from "$lib/components/MovieMakerTitle.svelte";
 	import FacingText3D from "$lib/components/FacingText3D.svelte";
 	import Text3D from "$lib/components/Text3D.svelte";
+	import PixelBlobs from "./PixelBlobs.svelte";
+
+	import widget from "$lib/assets/face+black+transparent.png";
+	import house from "$lib/assets/house.png";
 
 	let titleContainerOuter, titleContainerInner, albumTitle, particles, glitchOverlay, albumArtist
 	let albumIndex = $state(0);
 	let animating = $state();
-
-	import widget from "$lib/assets/face+black+transparent.png";
-	import house from "$lib/assets/house.png";
 
 	onMount(()=>{
 		gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrambleTextPlugin);
@@ -140,13 +141,11 @@
 		name: "I Love My Computer",
 		artist: "Ninajirachi",
 		cover: "https://upload.wikimedia.org/wikipedia/en/d/dd/I_Love_My_Computer_by_Ninajirachi.png",
-		particles: widget,
 		desc: ""
 	},{
 		name: "how i'm feeling now",
 		artist: "Charli xcx",
 		cover: "https://upload.wikimedia.org/wikipedia/en/b/bd/Charli_XCX_-_How_I%27m_Feeling_Now.png",
-		particles: house
 	},{
 		name: "WOMB",
 		artist: "Purity Ring",
@@ -154,6 +153,8 @@
 	}]
 </script>
 <!-- <boody> -->
+
+<PixelBlobs z={1}></PixelBlobs>
 
 <div id="smooth-wrapper">
 	<div id="smooth-content">
@@ -186,15 +187,6 @@
 						{albumData[0]?.artist}
 					</span>
 				</div>
-				{#each [...Array(10).keys()] as i (i)}
-					<div class="particles absolute w-16"
-						style="top:{5 + 90 * Math.random()}%; left: {5 + 90 * Math.random()}%"
-					>
-						<Text3D gapPx={1}>
-							<img src={albumData[albumIndex] ? albumData[albumIndex].particles : ''} alt="">
-						</Text3D>
-					</div>
-				{/each}
 			</div>
 		</div>
 	</div>
@@ -205,12 +197,13 @@
 	#titleContainerOuter {
 		height:90vh;
 		backface-visibility: hidden;
-		z-index: 9;
 		position: relative;
+		z-index: 9;
 	}
 
 	#titleContainerInner {
 		position: absolute;
+		z-index: 9;
 		height:100vh;
 		width: 100vw;
 		top: 0px;
