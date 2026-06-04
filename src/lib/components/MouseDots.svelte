@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from "svelte"
-	let {pSpacing = 9, tickDelay = 60, pSize = 2.5, xOffset = 0, yOffset = 0, z=0} = $props()
-	var canvas, ctx
+	let {pSpacing = 9, tickDelay = 60, pSize = 2.4, xOffset = 0, yOffset = 0, z=0} = $props()
+	var canvas, ctx, hidden, hidectx, lastFrameTime
 	var particles = {} // easier mgmt than array?
 	var particleIndex = 0
 
@@ -18,18 +18,27 @@
             canvas.height = window.innerHeight * window.devicePixelRatio;
 		})
 
-		setInterval(function() {
-			ctx.clearRect(0, 0, window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
+		hidectx = hidden.getContext("2d")
+		hidden.width = pSize
+		hidden.height = pSize
+		hidectx.beginPath()
+		hidectx.fillStyle = "#0000ff"
+		hidectx.fillRect(0, 0, pSize, pSize)
 
-			for (let i in particles) {
-				particles[i].tick();
-			}
+		function animation(time) {
+			if (time - lastFrameTime >= tickDelay){
+				lastFrameTime = time
+				ctx.clearRect(0, 0, window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
 
-			// for (let i = 0; i < 20; i++){
-			// 	new Particle(Math.floor(window.innerWidth * window.devicePixelRatio * Math.random() / 8) * 8 + 2,
-			// 		Math.floor(window.innerHeight * window.devicePixelRatio * Math.random() / 8) * 8, ctx)
-			// }
-     	}, tickDelay);
+				for (let i in particles) {
+					particles[i].tick();
+				}
+     		}
+			requestAnimationFrame(animation)
+		}
+
+		lastFrameTime = window.performance.now()
+		requestAnimationFrame(animation)
 	})
 
 	class Particle {
@@ -47,12 +56,10 @@
 		tick(){
 			this.lifeLeft-= tickDelay
 			if (this.lifeLeft >= 0){
-				this.ctx.beginPath()
-				this.ctx.fillStyle = "#0000ff"
-				this.ctx.fillRect(this.x, this.y, pSize,pSize)
+				ctx.drawImage(hidden, this.x, this.y);
 				if (this.lifeLeft < 500) {
-					this.x += pSpacing * Math.round((Math.random() - 0.5) * 5)
-					this.y += pSpacing * Math.round((Math.random() - 0.5) * 5)
+					this.x += pSpacing * Math.round((Math.random() - 0.5) * 8)
+					this.y += pSpacing * Math.round((Math.random() - 0.5) * 8)
 				}
 			} else {
 				delete particles[this.i]
@@ -61,8 +68,8 @@
 	}
 
 	let offsetCache = []
-	for (let x = -pSpacing*8; x <=pSpacing*8; x += pSpacing){
-		for (let y = -pSpacing*8; y <=pSpacing*8; y += pSpacing){
+	for (let x = -pSpacing*5; x <=pSpacing*5; x += pSpacing){
+		for (let y = -pSpacing*5; y <=pSpacing*5; y += pSpacing){
 			if (x**2 + y**2 <= (pSpacing*6)**2) {
 				offsetCache.push([x,y])
 			}
@@ -82,6 +89,9 @@
 <canvas id="mousePoo" style="--z-prop:{z}"
 	bind:this={canvas}
 	>
+</canvas>
+
+<canvas style="display: none;" bind:this={hidden}>
 </canvas>
 
 <style>

@@ -12,16 +12,12 @@
 	import Text3D from "$lib/components/Text3D.svelte";
 	import PixelBlobs from "./PixelBlobs.svelte";
 
-	import widget from "$lib/assets/face+black+transparent.png";
-	import house from "$lib/assets/house.png";
-
-	let titleContainerOuter, titleContainerInner, albumTitle, particles, glitchOverlay, albumArtist
+	let titleContainerOuter, titleContainerInner, albumTitle, glitchOverlay, albumArtist, albumDesc
 	let albumIndex = $state(0);
 	let animating = $state();
 
 	onMount(()=>{
 		gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrambleTextPlugin);
-		particles = Array.from(document.getElementsByClassName("particles"))
 
 		ScrollSmoother.create({
 			smooth: 0.3, // how long (in seconds) it takes to "catch up" to the native scroll position
@@ -34,6 +30,7 @@
 				trigger: titleContainerOuter,
 				start: "top top",
 				end: "bottom top",
+				// pin: "#pixBlobsContainer",
 				scrub: 1,
 				onLeave: () => {
 					intentObserver.enable();
@@ -76,35 +73,20 @@
 				return;
 			}
 
-			gsap.fromTo(particles,
-				{rotateY: 0 + 180 * (albumIndex % 2)},
-				{rotateY: 90 + 180 * (albumIndex % 2),
-				duration: 0.375,
-				ease: "power1.in",
-				onComplete: () => {
-					albumIndex = index
-				}
-			})
-			gsap.to(particles, {
-				rotateY: 180 * (albumIndex % 2 + 1),
-				duration: 0.375,
-				delay: 0.375,
-				ease: "back.out",
-				onComplete: () => {
-					animating = false
-				}
-			})
-
 			gsap.to(glitchOverlay, {
 				opacity: "100%",
 				duration: 0.375,
+				onComplete: ()=>{albumIndex = index}
 			})
 			gsap.fromTo(glitchOverlay,{
 				opacity: "100%"
 			},{
 				opacity: "0%",
 				duration: 0.37,
-				delay: 0.38
+				delay: 0.38,
+				onComplete: () => {
+					animating = false
+				}
 			})
 
 			gsap.to(albumTitle, {
@@ -141,20 +123,22 @@
 		name: "I Love My Computer",
 		artist: "Ninajirachi",
 		cover: "https://upload.wikimedia.org/wikipedia/en/d/dd/I_Love_My_Computer_by_Ninajirachi.png",
-		desc: ""
+		desc: "I grew up spending most of my childhood on the computer. EDM was also in its heyday at the time, and it was all I listened to as a child. This album is a really authentic and personal reflection of those experiences."
 	},{
 		name: "how i'm feeling now",
 		artist: "Charli xcx",
 		cover: "https://upload.wikimedia.org/wikipedia/en/b/bd/Charli_XCX_-_How_I%27m_Feeling_Now.png",
+		desc: "This was the first album from Charli that I got into. I think her best work is either this or Pop 2."
 	},{
 		name: "WOMB",
 		artist: "Purity Ring",
-		cover: "https://upload.wikimedia.org/wikipedia/en/c/c0/Purity_Ring_-_Womb.png"
+		cover: "https://upload.wikimedia.org/wikipedia/en/c/c0/Purity_Ring_-_Womb.png",
+		desc: ""
 	}]
 </script>
 <!-- <boody> -->
 
-<PixelBlobs z={1}></PixelBlobs>
+<PixelBlobs></PixelBlobs>
 
 <div id="smooth-wrapper">
 	<div id="smooth-content">
@@ -170,8 +154,8 @@
 		</div>
 
 		<div class="h-[100vh] relative">
-			<div class="swipe-section h-full flex">
-				<div class="w-[30%] m-auto flex flex-col items-center z-1">
+			<div class="swipe-section h-full flex justify-center items-center px-4 lg:">
+				<div class="w-[30%] flex flex-col items-center z-9">
 					<FacingText3D layers={1} scalar={0.01}>
 						<div class="relative overflow-clip">
 							<div class="static-noise" bind:this={glitchOverlay}></div>
@@ -186,6 +170,12 @@
 					<span bind:this={albumArtist} class="text-xl text-gray-700">
 						{albumData[0]?.artist}
 					</span>
+				</div>
+
+				<div class="flex flex-col justify-center gap-4">
+					<div class="text-center" bind:this={albumDesc}>
+						{albumData[0]?.desc}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -209,7 +199,7 @@
 		top: 0px;
 	}
 
-	#smooth-content {
+	:global(body) {
 		background-color: var(--color-blue-100);
 	}
 

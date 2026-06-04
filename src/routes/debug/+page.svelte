@@ -1,248 +1,105 @@
 <script>
-	import FacingText3D from "$lib/components/FacingText3D.svelte";
-    import SpinText from "$lib/components/SpinText.svelte";
-</script>
+	import { onMount } from "svelte";
+	import SpinText from "$lib/components/SpinText.svelte";
 
-<style type="text/css">
+	var canvas;
+	onMount(()=>{
+		const gl = canvas.getContext("webgl");
+		gl.clear(gl.COLOR_BUFFER_BIT);
+		canvas.width = window.innerWidth * window.devicePixelRatio
+		canvas.height = window.innerHeight * window.devicePixelRatio
 
-	@keyframes progress {
-		from { width: 0px;
-			background-color: red;
+		const resizeHandler = () => {
+			canvas.width = window.innerWidth * window.devicePixelRatio;
+			canvas.height = window.innerHeight * window.devicePixelRatio;
 		}
-		to { width: 200px;
-			background-color: rgba(0, 200, 0, 0.3);
-		}
-	}
+		window.addEventListener('resize', resizeHandler)
 
-	@keyframes txt {
-		from {
-			color: red;
-		}
-		to {
-			color: fuchsia;
-		}
-	}
+		// Vertex shader program
+		const vsSource = `
+			attribute vec4 aVertexPosition;
+			uniform mat4 uModelViewMatrix;
+			uniform mat4 uProjectionMatrix;
+			void main() {
+			gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+			}
+		`;
 
-	#container {
-		display:  flex;
-		flex-direction: column;
-		border:  1px solid black;
-		height:  500px;
-		width:  500px;
-		overflow-x:  hidden;
-		overflow-y:  scroll;
-		position:  relative;
-		align-items:  flex-start;
-		timeline-scope: --foo;
-	}
+		const fsSource = `
+			void main() {
+			gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+			}
+		`;
 
-	#overlay {
-		position: fixed;
-		top:  10px;
-		left:  10px;
-		width:  500px;
-		height:  500px;
-		pointer-events: none;
-	}
+		//
+		// Initialize a shader program, so WebGL knows how to draw our data
+		//
+		function initShaderProgram(gl, vsSource, fsSource) {
+			const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
+			const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
 
-	.spacer {
-		display:  inline-block;
-		flex:  none;
-		height:  120vh;
-		width:  120vw;
-	}
+			// Create the shader program
 
-	#subject {
-		background-color:  rgba(0, 0, 255, 0.5);
-		display:  inline-block;
-		flex:  none;
-		height: 125px;
-		width:  90%;
-		view-timeline-name: --foo;
-	}
+			const shaderProgram = gl.createProgram();
+			gl.attachShader(shaderProgram, vertexShader);
+			gl.attachShader(shaderProgram, fragmentShader);
+			gl.linkProgram(shaderProgram);
 
-	.progress-bar {
-		border:  1px solid green;
-		height:  20px;
-		width:  200px;
-		position:  absolute;
-		inset-inline-start:  20px;
-		padding:  0;
-		transition: all;
-		animation: ease-in-out txt both;
-		animation-timeline: --foo;
-		animation-range: cover;
-	}
+			// If creating the shader program failed, alert
 
-	#progress-bar-progress-a {
-		border:  1px solid green;
-		height:  20px;
-		width:  200px;
-		position:  absolute;
-		inset-inline-start:  20px;
-		padding:  0;
-		animation: linear progress forwards;
-		animation-timeline: --foo;
-		border-color:  transparent;
-		background-color: rgba(0, 200, 0, 0.3);
-		width: 0px;
+			if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+				alert(
+				`Unable to initialize the shader program: ${gl.getProgramInfoLog(
+					shaderProgram,
+					)}`,
+					);
+					return null;
+				}
 
-		animation-range: cover;
-	}
+				return shaderProgram;
+			}
 
-	#progress-bar-progress-b {
-		border:  1px solid green;
-		height:  20px;
-		width:  200px;
-		position:  absolute;
-		inset-inline-start:  20px;
-		padding:  0;
-		animation: linear progress forwards;
-		animation-timeline: --foo;
-		border-color:  transparent;
-		background-color: rgba(0, 200, 0, 0.3);
-		width: 0px;
+			//
+			// creates a shader of the given type, uploads the source and
+			// compiles it.
+			//
+			function loadShader(gl, type, source) {
+				const shader = gl.createShader(type);
 
-		animation-range: contain;
-	}
+				// Send the source to the shader object
 
-	#progress-bar-progress-c {
-		border:  1px solid green;
-		height:  20px;
-		width:  200px;
-		position:  absolute;
-		inset-inline-start:  20px;
-		padding:  0;
-		animation: linear progress forwards;
-		animation-timeline: --foo;
-		border-color:  transparent;
-		background-color: rgba(0, 200, 0, 0.3);
-		width: 0px;
+				gl.shaderSource(shader, source);
 
-		animation-range: entry;
-	}
+				// Compile the shader program
 
-	#progress-bar-progress-d {
-		border:  1px solid green;
-		height:  20px;
-		width:  200px;
-		position:  absolute;
-		inset-inline-start:  20px;
-		padding:  0;
-		animation: linear progress forwards;
-		animation-timeline: --foo;
-		border-color:  transparent;
-		background-color: rgba(0, 200, 0, 0.3);
-		width: 0px;
+				gl.compileShader(shader);
 
-		animation-range: exit;
-	}
+				// See if it compiled successfully
 
-	#progress-bar-progress-e {
-		border:  1px solid green;
-		height:  20px;
-		width:  200px;
-		position:  absolute;
-		inset-inline-start:  20px;
-		padding:  0;
-		animation: linear progress forwards;
-		animation-timeline: --foo;
-		border-color:  transparent;
-		background-color: rgba(0, 200, 0, 0.3);
-		width: 0px;
+				if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+					alert(
+					`An error occurred compiling the shaders: ${gl.getShaderInfoLog(shader)}`,
+					);
+					gl.deleteShader(shader);
+					return null;
+				}
 
-		animation-range: contain 25% 75%;
-	}
+				return shader;
+			}
+		})
+	</script>
 
-	#progress-bar-progress-f {
-		border:  1px solid green;
-		height:  20px;
-		width:  200px;
-		position:  absolute;
-		inset-inline-start:  20px;
-		padding:  0;
-		animation: linear progress forwards;
-		animation-timeline: --foo;
-		border-color:  transparent;
-		background-color: rgba(0, 200, 0, 0.3);
-		width: 0px;
+	<svelte:head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
+	integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ=="
+	crossorigin="anonymous"
+	defer></script>
+</svelte:head>
 
-		animation-range: entry 150% exit -50%;
-	}
-
-	#progress-bar-progress-g {
-		border:  1px solid green;
-		height:  20px;
-		width:  200px;
-		position:  absolute;
-		inset-inline-start:  20px;
-		padding:  0;
-		animation: linear progress forwards;
-		animation-timeline: --foo;
-		border-color:  transparent;
-		background-color: rgba(0, 200, 0, 0.3);
-		width: 0px;
-
-		/* mixed shorthand and longhands */
-		animation-range: entry;
-		animation-delay: cover;
-		animation-end-delay: contain;
-	}
-
-	#progress-bar-progress-h {
-		border:  1px solid green;
-		height:  20px;
-		width:  200px;
-		position:  absolute;
-		inset-inline-start:  20px;
-		padding:  0;
-		animation: linear progress forwards;
-		animation-timeline: --foo;
-		border-color:  transparent;
-		background-color: rgba(0, 200, 0, 0.3);
-		width: 0px;
-
-		/* mixed shorthand and longhands */
-		animation-range: entry 100% exit 200%;
-		animation-end-delay: contain;
-	}
-
-	.progress-bar > span {
-		padding-left:  5px;
-		padding-right:  5px;
-	}
-</style>
-
-<div id="container">
-	<div class="spacer"></div>
-	<div id="subject"></div>
-	<div class="spacer"></div>
-
-	<div id="overlay">
-		<div class="progress-bar" style="top: 20px;"><span>cover</span></div>
-		<div class="progress-bar" style="top: 70px;"><span>contain</span></div>
-		<div class="progress-bar" style="top: 120px;"><span>entry</span></div>
-		<div class="progress-bar" style="top: 170px;"><span>exit</span></div>
-		<div class="progress-bar" style="top: 220px"><span>contain 25% 75%</span></div>
-		<div class="progress-bar" style="top: 270px"><span>entry 150% exit -50%</span></div>
-		<div class="progress-bar" style="top: 320px"><span>* cover 0% contain 100%</span></div>
-		<div class="progress-bar" style="top: 370px"><span>* entry 100% contain 100%</span></div>
-		<div id="progress-bar-progress-a" class="progress-bar-progress" style="top: 20px;"></div>
-		<div id="progress-bar-progress-b" class="progress-bar-progress" style="top: 70px;"></div>
-		<div id="progress-bar-progress-c" class="progress-bar-progress" style="top: 120px;"></div>
-		<div id="progress-bar-progress-d" class="progress-bar-progress" style="top: 170px;"></div>
-		<div id="progress-bar-progress-e" class="progress-bar-progress" style="top: 220px;"></div>
-		<div id="progress-bar-progress-f" class="progress-bar-progress" style="top: 270px;"></div>
-		<div id="progress-bar-progress-g" class="progress-bar-progress" style="top: 320px;"></div>
-		<div id="progress-bar-progress-h" class="progress-bar-progress" style="top: 370px;"></div>
-	</div>
+<pre>
+	testt testset setst
+</pre>
+<div class="stretchroman">
+	<SpinText class="text-[10rem] text-[#8ace00] cursor-default">i've got a song that nobody knows</SpinText>
 </div>
-
-<div>* Look at CSS, there are some mixed examples that contain both shorthand and longhands</div>
-
-<FacingText3D layers={12} gapPx={2} scalar={0.04} brightnessDrop={2} class="font-sans text-pink-500 text-7xl absolute">
-					u u uwa uwa
-				</FacingText3D>
-<SpinText layers={12} gapPx={2} scalar={0.04} brightnessDrop={2} class="font-sans text-pink-500 text-7xl">
-					u u uwa uwa
-				</SpinText>
+<canvas bind:this={canvas}></canvas>

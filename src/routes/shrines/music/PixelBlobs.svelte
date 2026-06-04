@@ -1,14 +1,18 @@
 <script>
 	import { onMount } from "svelte"
-	import noise from "$lib/components/PerlinNoise"
+	import { createNoise3D } from "simplex-noise"
 
-	let {pSpacing = 9, tickDelay = 45, pSize = 2, z=0} = $props()
-	var canvas, ctx
+	let {pSpacing = 9, tickDelay = 60, pSize = 2.5, z=0, canvas = $bindable()} = $props()
+	var ctx, hidden, hidectx, lastFrameTime
 
 	onMount(()=>{
 		ctx = canvas.getContext("2d")
 		canvas.width = window.innerWidth * window.devicePixelRatio
 		canvas.height = window.innerHeight * window.devicePixelRatio
+
+		hidectx = hidden.getContext("2d")
+		hidden.width = pSize
+		hidden.height = pSize
 
 		const resizeHandler = () => {
             canvas.width = window.innerWidth * window.devicePixelRatio;
@@ -17,36 +21,50 @@
 
 		window.addEventListener('resize', resizeHandler)
 
-		noise.seed(Math.random())
+		// draw on hidden canvas to cache image
+		hidectx.beginPath()
+		hidectx.fillStyle = "#6969ff"
+		hidectx.fillRect(0, 0, pSize, pSize)
 
-		const interval = setInterval(function() {
-			ctx.clearRect(0, 0, window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
+		const noise3D = createNoise3D();
 
-			for (let i = 2; i < window.innerWidth * window.devicePixelRatio; i += pSpacing){
-				for (let j = 2; j < window.innerHeight * window.devicePixelRatio; j += pSpacing){
-					if (Math.random() - Math.abs(noise.perlin3(i/window.innerWidth * window.devicePixelRatio, j/window.innerHeight * window.devicePixelRatio, Date.now() / 1500)) > 0.6) {
-						ctx.beginPath()
-						ctx.fillStyle = "#0000ff"
-						ctx.fillRect(i, j, pSize, pSize)
+		const churnSlow = window.matchMedia(`(prefers-reduced-motion: reduce)`).matches ? 4096 : 1024
+		function animation(time) {
+			if (time - lastFrameTime >= tickDelay){
+				lastFrameTime = time
+				ctx.clearRect(0, 0, window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
+
+				for (let i = 2; i < window.innerWidth * window.devicePixelRatio; i += pSpacing){
+					for (let j = 2; j < window.innerHeight * window.devicePixelRatio; j += pSpacing){
+						if (Math.random() - Math.abs(noise3D(i/512, j/512, time/churnSlow)) > 0.5) {
+							ctx.drawImage(hidden, i, j);
+						}
 					}
 				}
 			}
-     	}, tickDelay);
+
+			requestAnimationFrame(animation)
+     	};
+		lastFrameTime = window.performance.now()
+		requestAnimationFrame(animation)
+		console.log(lastFrameTime)
 
 		return () => {
-			clearInterval(interval);
 			window.removeEventListener('resize', resizeHandler);
 		}
 	}, )
 </script>
 
-<canvas style="--z-prop:{z}"
+<canvas style="--z-prop:{z}" id="mainCanvas"
 	bind:this={canvas}
 	>
 </canvas>
 
+<canvas style="display: none;" bind:this={hidden}>
+</canvas>
+
 <style>
-	canvas {
+	#mainCanvas {
 		display: block;
 		position: fixed;
 		z-index: var(--z-prop);
