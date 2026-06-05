@@ -90,13 +90,24 @@
 			})
 
 			gsap.to(albumTitle, {
-				scrambleText: albumData[index].name,
-				chars: 'upperAndLowerCase',
+				scrambleText: {
+					text: albumData[index].name,
+					chars: 'lowerCase'
+				},
 				duration: 0.5
 			})
 			gsap.to(albumArtist, {
-				scrambleText: albumData[index].artist,
-				chars: 'upperAndLowerCase',
+				scrambleText: {
+					text: albumData[index].artist,
+					chars: 'lowerCase'
+				},
+				duration: 0.5
+			})
+			gsap.to(albumDesc, {
+				scrambleText: {
+					text: albumData[index].desc,
+					chars: '​'
+				},
 				duration: 0.5
 			})
 
@@ -123,17 +134,31 @@
 		name: "I Love My Computer",
 		artist: "Ninajirachi",
 		cover: "https://upload.wikimedia.org/wikipedia/en/d/dd/I_Love_My_Computer_by_Ninajirachi.png",
-		desc: "I grew up spending most of my childhood on the computer. EDM was also in its heyday at the time, and it was all I listened to as a child. This album is a really authentic and personal reflection of those experiences."
+		desc: "As a kid I spent a lot of time on the computer, and I was super into EDM which was also at its most popular during my childhood. This album is a loving, more mature evolution of that music I loved. Listening to it evokes the same feelings I had all those years ago. Listening to it always puts me in a better mood, and I really, really hope to hear it at a concert. The visuals are also gorgeous, they make me want to get pictures of cell towers framed on my walls."
 	},{
 		name: "how i'm feeling now",
 		artist: "Charli xcx",
 		cover: "https://upload.wikimedia.org/wikipedia/en/b/bd/Charli_XCX_-_How_I%27m_Feeling_Now.png",
-		desc: "This was the first album from Charli that I got into. I think her best work is either this or Pop 2."
+		desc: "This was the first album from Charli that I got into, and it remains my favorite to this day. It captures a huge range of emotions and gets them across really effectively, and the industrial noises scratch my brain in just the right way. I would put so much more of her discography here if I weren't trying to restrict myself to one album per artist. Also, I can't put my finger on why, but you can tell it was made during the pandemic."
 	},{
 		name: "WOMB",
 		artist: "Purity Ring",
 		cover: "https://upload.wikimedia.org/wikipedia/en/c/c0/Purity_Ring_-_Womb.png",
-		desc: ""
+		desc: "Purity Ring is among the earlier artists I became a big fan of. It was also released during the pandemic, and I leaned on it a lot to get me through hard times. It's like being wrapped in a blanket of sound. Even though I crave much more energetic and noisy music now, I still come back to this album when I'm upset. I also love their other albums, even though my taste has changed so much since discovering them."
+	},{
+		name: "Bonito Generation",
+		artist: "Kero Kero Bonito"
+	},{
+		name: "SISTER",
+		artist: "Frost Children"
+	},{
+		name: "Frailty",
+		artist: "Jane Remover",
+		desc: "This album makes me cry. I normally listen to Revengeseekerz and her ♡ EP much more, but this album is a lot more emotionally significant to me. It perfectly captures how it feels to be weird and lonely at a young age, along with a torrent of other feelings, like being upset at people close to you for having cruel beliefs, or feeling irredeemable because your peers are achieving way more than you are. I also listened to this during a breakup, so it's even more emotionally charged for me."
+	},{
+		name: "WOR$T GIRL IN AMERICA",
+		artist: "Slayyyter",
+		desc: "I put this on a lot when I'm annoyed, for obvious reasons. The closing track in particular really speaks to me. Even though I'm technically still young I feel like I'm failing to really achieve anything significant or create anything I consider a masterpiece. This was the last album she planned on making because of her music's poor performance in the past (a great injustice IMO), so the lyrics are basically her dying laments. She did her best but couldn't make it big: \"Do you notice all I've done?\""
 	}]
 </script>
 <!-- <boody> -->
@@ -154,8 +179,8 @@
 		</div>
 
 		<div class="h-[100vh] relative">
-			<div class="swipe-section h-full flex justify-center items-center px-4 lg:">
-				<div class="w-[30%] flex flex-col items-center z-9">
+			<div class="swipe-section h-full flex flex-row items-center justify-items-start lg:w-[70vw] mx-auto">
+				<div class="flex flex-col items-center z-9 flex-1">
 					<FacingText3D layers={1} scalar={0.01}>
 						<div class="relative overflow-clip">
 							<div class="static-noise" bind:this={glitchOverlay}></div>
@@ -164,15 +189,15 @@
 							} alt="Album art" width="300px" height="300px">
 						</div>
 					</FacingText3D>
-					<span bind:this={albumTitle} class="text-2xl">
+					<span bind:this={albumTitle} class="text-2xl text-center">
 						{albumData[0]?.name}
 					</span>
-					<span bind:this={albumArtist} class="text-xl text-gray-700">
+					<span bind:this={albumArtist} class="text-xl text-gray-700 text-center">
 						{albumData[0]?.artist}
 					</span>
 				</div>
 
-				<div class="flex flex-col justify-center gap-4">
+				<div class="flex flex-col justify-center gap-4 wrap-anywhere flex-2">
 					<div class="text-center" bind:this={albumDesc}>
 						{albumData[0]?.desc}
 					</div>

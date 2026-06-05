@@ -9,16 +9,17 @@
     import { onMount } from "svelte";
 
 	let items = [{
-		"name": "projects",
-		"dropdown": ["code", "videos", "misc"]
+		name: "projects",
+		dropdown: ["code", "videos", "misc"]
 	},{
-		"name": "shrines",
-		dropdown: ["music", "other media", "pets"]
+		name: "favorites",
+		dir: "shrines",
+		dropdown: ["music", "shows", "pets"]
 	},{
-		"name": "webtoys",
-		"dropdown": ["crappy ui", "games", "misc"]
+		name: "webtoys",
+		dropdown: ["crappy ui", "games", "misc"]
 	},{
-		"name": "about"
+		name: "about"
 	}]
 </script>
 
@@ -33,12 +34,12 @@
 		<div class="flex place-items-center items-start font-mono text-gray-100 lowercase justify-around w-full text-2xl">
 			{#each items as item, i (i)}
 				<div>
-					<GlitchText class="hoverfont{item.dropdown ? ' peer cursor-default' : ''}" data_text={item.name} href="{item.dropdown ? null : item.name}">
+					<GlitchText class="hoverfont{item.dropdown ? ' peer cursor-default' : ''}" data_text={item.name} href="{item.dropdown ? null : (item.dir || item.name)}">
 					</GlitchText>
 					{#if item.dropdown}
 						<div class="text-m dropdownContainer glow">
 							{#each item.dropdown as d, j (j)}
-								<a href="/{item.name}/{d}" class="dropdownItem" style="transition-delay: {j * 0.05}s">
+								<a href="/{item.dir || item.name}/{d}" class="dropdownItem" style="transition-delay: {j * 0.05}s">
 									{d}
 								</a>
 							{/each}
