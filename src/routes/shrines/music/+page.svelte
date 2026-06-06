@@ -189,16 +189,16 @@
 							} alt="Album art" width="300px" height="300px">
 						</div>
 					</FacingText3D>
-					<span bind:this={albumTitle} class="text-2xl text-center">
+					<span bind:this={albumTitle} class="text-2xl text-center text-gray-50">
 						{albumData[0]?.name}
 					</span>
-					<span bind:this={albumArtist} class="text-xl text-gray-700 text-center">
+					<span bind:this={albumArtist} class="text-xl text-gray-400 text-center">
 						{albumData[0]?.artist}
 					</span>
 				</div>
 
-				<div class="flex flex-col justify-center gap-4 wrap-anywhere flex-2">
-					<div class="text-center" bind:this={albumDesc}>
+				<div class="flex flex-col justify-center gap-4 wrap-anywhere flex-2 text-gray-50">
+					<div bind:this={albumDesc}>
 						{albumData[0]?.desc}
 					</div>
 				</div>
@@ -225,7 +225,7 @@
 	}
 
 	:global(body) {
-		background-color: var(--color-blue-100);
+		background-color: var(--color-blue-950);
 	}
 
 	.static-noise {

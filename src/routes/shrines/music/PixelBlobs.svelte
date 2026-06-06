@@ -23,7 +23,7 @@
 
 		// draw on hidden canvas to cache image
 		hidectx.beginPath()
-		hidectx.fillStyle = "#6969ff"
+		hidectx.fillStyle = "oklch(44.3% 0.11 240.79)"
 		hidectx.fillRect(0, 0, pSize, pSize)
 
 		const noise3D = createNoise3D();
