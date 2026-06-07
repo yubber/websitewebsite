@@ -2,7 +2,12 @@
 	import { onMount } from "svelte"
 	import { createNoise3D } from "simplex-noise"
 
-	let {pSpacing = 9, tickDelay = 60, pSize = 2.5, z=0, canvas = $bindable()} = $props()
+	let {pSpacing = 9, tickDelay = 60, pSize = 2.5, z=0, canvas = $bindable(), color = "oklch(44.3% 0.11 240.79)",
+		thresholdFunc = (noise) => {
+			return Math.abs(noise) - Math.random() < -0.4
+		}
+
+	} = $props()
 	var ctx, hidden, hidectx, lastFrameTime
 
 	onMount(()=>{
@@ -23,7 +28,7 @@
 
 		// draw on hidden canvas to cache image
 		hidectx.beginPath()
-		hidectx.fillStyle = "oklch(44.3% 0.11 240.79)"
+		hidectx.fillStyle = color
 		hidectx.fillRect(0, 0, pSize, pSize)
 
 		const noise3D = createNoise3D();
@@ -36,7 +41,7 @@
 
 				for (let i = 2; i < window.innerWidth * window.devicePixelRatio; i += pSpacing){
 					for (let j = 2; j < window.innerHeight * window.devicePixelRatio; j += pSpacing){
-						if (Math.random() - Math.abs(noise3D(i/512, j/512, time/churnSlow)) > 0.5) {
+						if (thresholdFunc(noise3D(i/512, j/512, time/churnSlow))) {
 							ctx.drawImage(hidden, i, j);
 						}
 					}
@@ -47,7 +52,6 @@
      	};
 		lastFrameTime = window.performance.now()
 		requestAnimationFrame(animation)
-		console.log(lastFrameTime)
 
 		return () => {
 			window.removeEventListener('resize', resizeHandler);

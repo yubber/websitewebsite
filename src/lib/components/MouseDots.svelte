@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from "svelte"
-	let {pSpacing = 9, tickDelay = 60, pSize = 2.4, xOffset = 0, yOffset = 0, z=0} = $props()
+	let {pSpacing = 9, tickDelay = 60, pSize = 2.4, xOffset = 0, yOffset = 0, z=0, color="#0000ff"} = $props()
 	var canvas, ctx, hidden, hidectx, lastFrameTime
 	var particles = {} // easier mgmt than array?
 	var particleIndex = 0
@@ -22,7 +22,7 @@
 		hidden.width = pSize
 		hidden.height = pSize
 		hidectx.beginPath()
-		hidectx.fillStyle = "#0000ff"
+		hidectx.fillStyle = color
 		hidectx.fillRect(0, 0, pSize, pSize)
 
 		function animation(time) {

@@ -1,105 +1,197 @@
 <script>
 	import { onMount } from "svelte";
-	import SpinText from "$lib/components/SpinText.svelte";
+	import { gsap } from "gsap/dist/gsap";
+	import { ScrollSmoother } from "gsap/dist/all";
 
-	var canvas;
+	import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+
 	onMount(()=>{
-		const gl = canvas.getContext("webgl");
-		gl.clear(gl.COLOR_BUFFER_BIT);
-		canvas.width = window.innerWidth * window.devicePixelRatio
-		canvas.height = window.innerHeight * window.devicePixelRatio
+		gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
-		const resizeHandler = () => {
-			canvas.width = window.innerWidth * window.devicePixelRatio;
-			canvas.height = window.innerHeight * window.devicePixelRatio;
-		}
-		window.addEventListener('resize', resizeHandler)
+		ScrollSmoother.create({
+			smooth: 0.3, // how long (in seconds) it takes to "catch up" to the native scroll position
+			effects: true, // looks for data-speed and data-lag attributes on elements
+			// smoothTouch: 0.1
+		});
 
-		// Vertex shader program
-		const vsSource = `
-			attribute vec4 aVertexPosition;
-			uniform mat4 uModelViewMatrix;
-			uniform mat4 uProjectionMatrix;
-			void main() {
-			gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
-			}
-		`;
+		gsap.set(".slide:not(:first-child)", { xPercent: 100 });
+		gsap.set(".slide .heading", { opacity: 0 });
 
-		const fsSource = `
-			void main() {
-			gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-			}
-		`;
+		const tl = gsap.timeline();
+		tl.to(".slide:not(:first-child)", {
+			ease: "none",
+			xPercent: 0,
+			stagger: 1,
+			duration: 1
+		}).to(
+		".slide .heading",
+		{
+			opacity: 1,
+			duration: 1,
+			stagger: 1
+		},
+		"<"
+		);
 
-		//
-		// Initialize a shader program, so WebGL knows how to draw our data
-		//
-		function initShaderProgram(gl, vsSource, fsSource) {
-			const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
-			const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
+		ScrollTrigger.create({
+			trigger: ".slides",
+			start: "top top",
+			end: "+=500%",
+			scrub: true,
+			pin: true,
+			animation: tl
+			//markers: true
+		});
+	})
 
-			// Create the shader program
+</script>
 
-			const shaderProgram = gl.createProgram();
-			gl.attachShader(shaderProgram, vertexShader);
-			gl.attachShader(shaderProgram, fragmentShader);
-			gl.linkProgram(shaderProgram);
 
-			// If creating the shader program failed, alert
-
-			if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-				alert(
-				`Unable to initialize the shader program: ${gl.getProgramInfoLog(
-					shaderProgram,
-					)}`,
-					);
-					return null;
-				}
-
-				return shaderProgram;
-			}
-
-			//
-			// creates a shader of the given type, uploads the source and
-			// compiles it.
-			//
-			function loadShader(gl, type, source) {
-				const shader = gl.createShader(type);
-
-				// Send the source to the shader object
-
-				gl.shaderSource(shader, source);
-
-				// Compile the shader program
-
-				gl.compileShader(shader);
-
-				// See if it compiled successfully
-
-				if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-					alert(
-					`An error occurred compiling the shaders: ${gl.getShaderInfoLog(shader)}`,
-					);
-					gl.deleteShader(shader);
-					return null;
-				}
-
-				return shader;
-			}
-		})
-	</script>
-
-	<svelte:head>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
-	integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ=="
-	crossorigin="anonymous"
-	defer></script>
-</svelte:head>
-
-<pre>
-	testt testset setst
-</pre>
-<div class="stretchroman">
-	<SpinText class="text-[10rem] text-[#8ace00] cursor-default">i've got a song that nobody knows</SpinText>
+<div id="smooth-wrapper">
+	<div id="smooth-content">
+<section class="section">
+	<div>
+		<h1>Reveal Sections on Scroll</h1>
+		<p>GSAP & ScrollTrigger - <span>right-to-left horizontal animation</span></p>
+		<p>👇 Scroll down</p>
+	</div>
+</section>
+<section class="section-slides">
+	<div class="slides">
+		<div class="slide">
+			<figure>
+				<img width="1920" height="1280" src="https://assets.codepen.io/162656/gallery-edinburgh.jpg" alt="edinburgh" />
+				<figcaption>
+					<h2 class="heading">Edinburgh</h2>
+				</figcaption>
+			</figure>
+		</div>
+		<div class="slide">
+			<figure>
+				<img width="1920" height="1005" src="https://assets.codepen.io/162656/gallery-berlin.jpg" alt="berlin" />
+				<figcaption>
+					<h2 class="heading">Berlin</h2>
+				</figcaption>
+			</figure>
+		</div>
+		<div class="slide">
+			<figure>
+				<img width="1920" height="1282" src="https://assets.codepen.io/162656/gallery-havana.jpg" alt="havana" />
+				<figcaption>
+					<h2 class="heading">Havana</h2>
+				</figcaption>
+			</figure>
+		</div>
+		<div class="slide">
+			<figure>
+				<img width="1920" height="1279" src="https://assets.codepen.io/162656/gallery-london.jpg" alt="london" />
+				<figcaption>
+					<h2 class="heading">London</h2>
+				</figcaption>
+			</figure>
+		</div>
+		<div class="slide">
+			<figure>
+				<img width="1920" height="1439" src="https://assets.codepen.io/162656/gallery-athens.jpg" alt="athens" />
+				<figcaption>
+					<h2 class="heading">Athens</h2>
+				</figcaption>
+			</figure>
+		</div>
+		<div class="slide">
+			<figure>
+				<img width="1920" height="1281" src="https://assets.codepen.io/162656/gallery-vienna.jpg" alt="vienna" />
+				<figcaption>
+					<h2 class="heading">Vienna</h2>
+				</figcaption>
+			</figure>
+		</div>
+	</div>
+</section>
+<section class="section">
+	<h2>Thank you!</h2>
+</section>
 </div>
-<canvas bind:this={canvas}></canvas>
+</div>
+
+<style>
+	/* BASIC STYLES
+	–––––––––––––––––––––––––––––––––––––––––––––––––– */
+	@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		font-family: "Montserrat", sans-serif;
+		margin: 0;
+	}
+
+	.section {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 15px;
+		height: 100vh;
+		text-align: center;
+		color: white;
+		background: #003049;
+	}
+
+	.section span {
+		text-decoration: underline;
+	}
+
+	.section-slides {
+		margin-top: -1px;
+	}
+
+	/* MAIN STYLES
+	–––––––––––––––––––––––––––––––––––––––––––––––––– */
+	.slides {
+		display: grid;
+		overflow: hidden;
+	}
+
+	.slide {
+		grid-area: 1/1;
+	}
+
+	.slide figure {
+		margin: 0;
+		position: relative;
+		height: 100vh;
+	}
+
+	.slide img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		background: #f1faee;
+	}
+
+	.slide figcaption {
+		display: flex;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		align-items: center;
+		background: rgba(0, 0, 0, 0.15);
+	}
+
+	.slide .heading {
+		display: inline-block;
+		padding: 5px 15px;
+		text-align: center;
+		font-size: clamp(2.5rem, 2vh, 5rem);
+		line-height: 1;
+		font-weight: bold;
+		color: #d62828;
+		background: #fcbf49;
+		transform: rotate(-90deg) translateX(-50%);
+		transform-origin: left top;
+	}
+</style>
