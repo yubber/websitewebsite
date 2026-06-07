@@ -1,6 +1,4 @@
 <script>
-	import widgetblack from "$lib/assets/face+black+transparent.png"
-
 	import { onMount } from "svelte";
 	import { gsap } from "gsap/dist/gsap";
 	import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
@@ -11,9 +9,7 @@
 	import PixelBlobs from "./PixelBlobs.svelte";
 
 	let titleContainerOuter, titleContainerInner, albumTitle, albumArtist, albumDesc
-	let albumIndex = $state(0);
-	let animating = $state();
-
+	const albumInterval = 25
 
 	let albumData = [{
 		name: "I Love My Computer",
@@ -70,18 +66,47 @@
 		titleTl.fromTo(titleContainerInner, {rotateY: 0, scale: 1}, {rotateY: '360deg', scale: 0})
 
 		const albumsTl = gsap.timeline()
-		albumsTl.fromTo("#albumsCarousel", {xPercent: 0, ease: "none"}, {xPercent: -100 * (albumData.length - 1)})
+		albumsTl.fromTo("#albumsCarousel", {x: 0, ease: "none"}, {x: -albumInterval * (albumData.length - 1) * window.innerWidth / 100, ease: "none"})
 
 		ScrollTrigger.create({
 			trigger: ".albums-section",
 			start: "top top",
 			end: "+=" + (albumData.length - 1) + "00%",
-			snap: 1 / (albumData.length - 1),
+			snap: {
+				// ease: "elastic.out",
+				snapTo: albumData.map((e, i) => i / (albumData.length - 1)),
+				delay: 0.1,
+				duration: {min: 0.1, max: 0.7},
+				onStart: (self) => { // todo get snap target
+					const index = Math.round(self.progress * (albumData.length - 1)) + self.direction;
+					gsap.to(albumTitle, {
+						scrambleText: {
+							text: albumData[index].name,
+							chars: 'lowerCase'
+						},
+						duration: 0.5
+					})
+					gsap.to(albumArtist, {
+						scrambleText: {
+							text: albumData[index].artist,
+							chars: 'lowerCase'
+						},
+						duration: 0.5
+					})
+					gsap.to(albumDesc, {
+						scrambleText: {
+							text: albumData[index].desc,
+							chars: '​'
+						},
+						duration: 0.5
+					})
+				}
+			},
 			markers: true,
 			scrub: true,
 			pin: true,
 			animation: albumsTl,
-			// onUpdate: ()=>{console.log(albumsTl.progress())}
+			onUpdate: ()=>{console.log(albumsTl.progress())}
 		})
 	})
 </script>
@@ -102,19 +127,20 @@
 			</div>
 		</div>
 
+		<!-- todo stop album text from pushing covers up -->
 		<div class="h-[100vh] relative">
 			<div class="albums-section h-full flex flex-col justify-center">
-				<div id="albumsCarousel" class="w-full h-[300px]">
-					<div class="relative left-[50%]">
+				<div id="albumsCarousel" class="w-full h-[300px] overflow-visible">
+					<ul class="relative left-[50%] h-full w-full">
 						{#each albumData as album, i (i)}
-							<div class="absolute object-contain" style="translate: {i*100}cqw">
-								<img src={
-									(album.cover)
-								} alt="Album art for {album.name}"
-								style="translate: -50%;">
-							</div>
+						<li class="absolute object-contain h-full" style="translate: {i*albumInterval}vw">
+							<img src={
+								(album.cover)
+							} alt="Album art for {album.name}"
+							style="translate: -50%; height: 100%;">
+						</li>
 						{/each}
-					</div>
+					</ul>
 				</div>
 
 				<span bind:this={albumTitle} class="text-2xl text-center text-gray-50">
@@ -132,7 +158,7 @@
 			</div>
 		</div>
 		<br>
-		<div style="height: {albumData.length}00vh"></div>
+		<div style="height: {albumData.length - 1}00vh"></div>
 	</div>
 </div>
 
