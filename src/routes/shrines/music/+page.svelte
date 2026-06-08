@@ -66,7 +66,13 @@
 		titleTl.fromTo(titleContainerInner, {rotateY: 0, scale: 1}, {rotateY: '360deg', scale: 0})
 
 		const albumsTl = gsap.timeline()
-		albumsTl.fromTo("#albumsCarousel", {x: 0, ease: "none"}, {x: -albumInterval * (albumData.length - 1) * window.innerWidth / 100, ease: "none"})
+		albumsTl.fromTo("#albumsCarousel", {xPercent: 0, ease: "none"}, {xPercent: -albumInterval * (albumData.length - 1), ease: "none"})
+		// albumsTl.fromTo(".albumCover>img",
+		// 	{rotateY: 0, stagger: {
+		// 		from: "start",
+
+		// 	}},
+		// {rotateY: -albumInterval * (albumData.length - 1)},)
 
 		ScrollTrigger.create({
 			trigger: ".albums-section",
@@ -74,11 +80,11 @@
 			end: "+=" + (albumData.length - 1) + "00%",
 			snap: {
 				// ease: "elastic.out",
-				snapTo: albumData.map((e, i) => i / (albumData.length - 1)),
+				snapTo: 1 / (albumData.length - 1),
 				delay: 0.1,
 				duration: {min: 0.1, max: 0.7},
-				onStart: (self) => { // todo get snap target
-					const index = Math.round(self.progress * (albumData.length - 1)) + self.direction;
+				onStart: (self) => {
+					const index = Math.round(albumsTl.progress() * (albumData.length - 1) + 0.499 * self.direction) // lmao
 					gsap.to(albumTitle, {
 						scrambleText: {
 							text: albumData[index].name,
@@ -102,7 +108,6 @@
 					})
 				}
 			},
-			markers: true,
 			scrub: true,
 			pin: true,
 			animation: albumsTl,
@@ -133,7 +138,7 @@
 				<div id="albumsCarousel" class="w-full h-[300px] overflow-visible">
 					<ul class="relative left-[50%] h-full w-full">
 						{#each albumData as album, i (i)}
-						<li class="absolute object-contain h-full" style="translate: {i*albumInterval}vw">
+						<li class="absolute object-contain h-full albumCover" style="translate: {i*albumInterval}cqw">
 							<img src={
 								(album.cover)
 							} alt="Album art for {album.name}"
