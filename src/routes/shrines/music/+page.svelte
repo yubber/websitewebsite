@@ -66,13 +66,22 @@
 		titleTl.fromTo(titleContainerInner, {rotateY: 0, scale: 1}, {rotateY: '360deg', scale: 0})
 
 		const albumsTl = gsap.timeline()
-		albumsTl.fromTo("#albumsCarousel", {xPercent: 0, ease: "none"}, {xPercent: -albumInterval * (albumData.length - 1), ease: "none"})
-		// albumsTl.fromTo(".albumCover>img",
-		// 	{rotateY: 0, stagger: {
-		// 		from: "start",
 
-		// 	}},
-		// {rotateY: -albumInterval * (albumData.length - 1)},)
+		const rotateValue = 45
+		gsap.set(".albumCover:not(:first-child)", {rotateY: rotateValue})
+		gsap.utils.selector("#albumsCarousel")(".albumCover").forEach((e, i) => {
+			// item is "focused" at t = i / length-1. duration is arbitrary relative units??
+			// move this in
+			if (i !== 0){
+				albumsTl.fromTo(e, {rotateY: rotateValue}, {rotateY: 0, duration: 1}, i-1)
+			}
+			// move this out
+			if (i !== albumData.length - 1){
+				albumsTl.fromTo(e, {rotateY: 0}, {rotateY: -rotateValue, duration: 1}, i)
+			}
+		})
+
+		albumsTl.fromTo("#albumsCarousel", {xPercent: 0}, {xPercent: -albumInterval * (albumData.length - 1), ease: "none", duration: albumData.length-1}, 0)
 
 		ScrollTrigger.create({
 			trigger: ".albums-section",
@@ -142,7 +151,7 @@
 							<img src={
 								(album.cover)
 							} alt="Album art for {album.name}"
-							style="translate: -50%; height: 100%;">
+							style="translate: -50%; height: 100%; transform-origin: 0% 50%">
 						</li>
 						{/each}
 					</ul>
