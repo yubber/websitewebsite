@@ -69,11 +69,13 @@
 
 		const rotateValue = 45
 		gsap.set(".albumCover:not(:first-child)", {rotateY: rotateValue})
+		gsap.set(".albumCover:not(:first-child)", {filter: "brightness(50%)"})
 		gsap.utils.selector("#albumsCarousel")(".albumCover").forEach((e, i) => {
 			// item is "focused" at t = i / length-1. duration is arbitrary relative units??
 			// move this in
 			if (i !== 0){
 				albumsTl.fromTo(e, {rotateY: rotateValue}, {rotateY: 0, duration: 1}, i-1)
+				albumsTl.fromTo(e, {filter: "brightness(50%)"}, {filter: "brightness(100%)", duration: 1}, i-1)
 			}
 			// move this out
 			if (i !== albumData.length - 1){
