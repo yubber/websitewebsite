@@ -67,7 +67,7 @@
 
 		const albumsTl = gsap.timeline()
 
-		const rotateValue = 45
+		const rotateValue = 75
 		gsap.set(".albumCover:not(:first-child)", {rotateY: rotateValue})
 		gsap.set(".albumCover:not(:first-child)", {filter: "brightness(50%)"})
 		gsap.utils.selector("#albumsCarousel")(".albumCover").forEach((e, i) => {
@@ -143,7 +143,6 @@
 			</div>
 		</div>
 
-		<!-- todo stop album text from pushing covers up -->
 		<div class="h-[100vh] relative">
 			<div class="albums-section h-full flex flex-col justify-center">
 				<div id="albumsCarousel" class="w-full h-[300px] overflow-visible">
@@ -153,7 +152,7 @@
 							<img src={
 								(album.cover)
 							} alt="Album art for {album.name}"
-							style="translate: -50%; height: 100%; transform-origin: 0% 50%">
+							style="translate: -50%; height: 100%; transform-origin: 0% 50%; perspective: 6cm;">
 						</li>
 						{/each}
 					</ul>

@@ -69,7 +69,7 @@
 	}
 
 	.darkxpbg {
-		background-size: cover;
+		background-size: contain;
 		background:
         	/* top, transparent black, faked with gradient */
 			linear-gradient(
@@ -77,7 +77,8 @@
 				rgba(0, 0, 0, 0.55)
 			),
 			/* bottom, image */
-			url("https://frutigeraeroarchive.org/images/wallpapers/windows_xp/windows_xp_16.jpg");
+			url("https://frutigeraeroarchive.org/images/wallpapers/windows_xp/windows_xp_16.jpg")
+			repeat center;
     }
 
 	.hoverfont :hover{

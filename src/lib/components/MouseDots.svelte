@@ -11,11 +11,11 @@
 
 	onMount(()=>{
 		ctx = canvas.getContext("2d")
-		canvas.width = window.innerWidth * window.devicePixelRatio
-		canvas.height = window.innerHeight * window.devicePixelRatio
+		canvas.width = window.innerWidth
+		canvas.height = window.innerHeight
 		window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth * window.devicePixelRatio;
-            canvas.height = window.innerHeight * window.devicePixelRatio;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
 		})
 
 		hidectx = hidden.getContext("2d")
@@ -28,7 +28,7 @@
 		function animation(time) {
 			if (time - lastFrameTime >= tickDelay){
 				lastFrameTime = time
-				ctx.clearRect(0, 0, window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
+				ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
 				for (let i in particles) {
 					particles[i].tick();
@@ -44,8 +44,8 @@
 	class Particle {
 		constructor(x, y, context){
 			this.lifeLeft = 0 + 240 * Math.random() * (Math.random() > 0.9 ? 2.5 : 1)
-			this.x = x
-			this.y = y
+			this.x = Math.round(x)
+			this.y = Math.round(y)
 			this.ctx = context
 			this.i = particleIndex
 			particleIndex++
