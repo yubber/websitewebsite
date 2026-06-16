@@ -74,12 +74,12 @@
 			// item is "focused" at t = i / length-1. duration is arbitrary relative units??
 			// move this in
 			if (i !== 0){
-				albumsTl.fromTo(e, {rotateY: rotateValue}, {rotateY: 0, duration: 1}, i-1)
-				albumsTl.fromTo(e, {filter: "brightness(50%)"}, {filter: "brightness(100%)", duration: 1}, i-1)
+				albumsTl.fromTo(e, {rotateY: rotateValue}, {rotateY: 0, duration: 1, ease: "power2.inOut"}, i-1)
+				albumsTl.fromTo(e, {filter: "brightness(50%)"}, {filter: "brightness(100%)", duration: 1, ease: "power2.inOut"}, i-1)
 			}
 			// move this out
 			if (i !== albumData.length - 1){
-				albumsTl.fromTo(e, {rotateY: 0}, {rotateY: -rotateValue, duration: 1}, i)
+				albumsTl.fromTo(e, {rotateY: 0}, {rotateY: -rotateValue, duration: 1, ease: "power2.inOut"}, i)
 			}
 		})
 
@@ -152,7 +152,7 @@
 							<img src={
 								(album.cover)
 							} alt="Album art for {album.name}"
-							style="translate: -50%; height: 100%; transform-origin: 0% 50%; perspective: 6cm;">
+							style="translate: -50%; height: 100%; transform-origin: 0% 40%; perspective: 12cm;">
 						</li>
 						{/each}
 					</ul>
