@@ -2,6 +2,8 @@
 	import firecvnt from "$lib/assets/stickers/firecvnt.gif"
 	import ilmc from "$lib/assets/stickers/ilmc8831.png"
 	import opensource from "$lib/assets/stickers/open source.gif"
+	import musicBadge from "$lib/assets/stickers/music.gif"
+	import lainBadge from "$lib/assets/stickers/lain.gif"
 
 	import SpinText from "$lib/components/SpinText.svelte";
 	import GlitchText from "$lib/components/GlitchText.svelte";
@@ -53,11 +55,17 @@
 		<span class="h-full">
 			<img src={firecvnt} alt="Firefox Now!">
 		</span>
+		<a href="javascript:alert('No matter where you go, everyone's connected.')">
+			<img src={lainBadge} title="from zanarkand.neocities.org" alt="Serial Experiments Lain">
+		</a>
 		<a href="https://www.youtube.com/watch?v=RKybAhTw8iE&list=PLQQj6Cezh2Nupac5mjljKE-SncM_2Go59&index=5" class="h-full">
 			<img src={ilmc} alt="Ninajirachi - I Love My Computer" class="h-full object-contain outset">
 		</a>
 		<a href="https://github.com/yubber/websitewebsite" class="">
 			<img src={opensource} alt="open source">
+		</a>
+		<a href="https://www.youtube.com/watch?v=UNYqwpx7Cys" title="badge from plasticdino.net">
+			<img src={musicBadge} alt="underscores - Music">
 		</a>
 	</div>
 </div>

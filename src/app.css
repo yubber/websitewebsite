@@ -206,3 +206,10 @@
 .crt-text {
 	animation: textShadow 1.6s infinite;
 }
+
+.pixelfont {
+	font-family: "ＭＳ Ｐゴシック";
+	font-smooth: never;
+	-webkit-font-smoothing : none;
+	font-size: 75%;
+}
