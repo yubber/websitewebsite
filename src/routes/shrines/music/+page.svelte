@@ -29,7 +29,8 @@
 	},{
 		name: "Bonito Generation",
 		artist: "Kero Kero Bonito",
-		cover: "https://upload.wikimedia.org/wikipedia/en/2/2c/Kero_Kero_Bonito_-_Bonito_Generation.jpg"
+		cover: "https://upload.wikimedia.org/wikipedia/en/2/2c/Kero_Kero_Bonito_-_Bonito_Generation.jpg",
+		desc: ""
 	},{
 		name: "SISTER",
 		artist: "Frost Children",
@@ -67,19 +68,20 @@
 
 		const albumsTl = gsap.timeline()
 
-		const rotateValue = 75
-		gsap.set(".albumCover:not(:first-child)", {rotateY: rotateValue})
+		const rotateValue = 45
+		gsap.set(".albumCover:not(:first-child)", {rotateY: -rotateValue})
 		gsap.set(".albumCover:not(:first-child)", {filter: "brightness(50%)"})
 		gsap.utils.selector("#albumsCarousel")(".albumCover").forEach((e, i) => {
 			// item is "focused" at t = i / length-1. duration is arbitrary relative units??
 			// move this in
 			if (i !== 0){
-				albumsTl.fromTo(e, {rotateY: rotateValue}, {rotateY: 0, duration: 1, ease: "power2.inOut"}, i-1)
+				albumsTl.fromTo(e, {rotateY: -rotateValue}, {rotateY: 0, duration: 1, ease: "power2.inOut"}, i-1)
 				albumsTl.fromTo(e, {filter: "brightness(50%)"}, {filter: "brightness(100%)", duration: 1, ease: "power2.inOut"}, i-1)
 			}
 			// move this out
 			if (i !== albumData.length - 1){
-				albumsTl.fromTo(e, {rotateY: 0}, {rotateY: -rotateValue, duration: 1, ease: "power2.inOut"}, i)
+				albumsTl.fromTo(e, {filter: "brightness(100%)"}, {filter: "brightness(50%)", duration: 1, ease: "power2.inOut"}, i)
+				albumsTl.fromTo(e, {rotateY: 0}, {rotateY: rotateValue, duration: 1, ease: "power2.inOut"}, i)
 			}
 		})
 
@@ -144,15 +146,15 @@
 		</div>
 
 		<div class="h-[100vh] relative">
-			<div class="albums-section h-full flex flex-col justify-center">
-				<div id="albumsCarousel" class="w-full h-[300px] overflow-visible">
-					<ul class="relative left-[50%] h-full w-full">
+			<div class="albums-section h-full flex flex-col justify-center perspective-origin-center perspective-midrange transform-3d">
+				<div id="albumsCarousel" class="w-full h-[300px] overflow-visible transform-3d">
+					<ul class="relative left-[50%] h-full w-full transform-3d">
 						{#each albumData as album, i (i)}
-						<li class="absolute object-contain h-full albumCover" style="translate: {i*albumInterval}cqw">
+						<li class="absolute object-contain h-full albumCover transform-3d" style="translate: {i*albumInterval}cqw; transform-origin: 0% 40%;">
 							<img src={
 								(album.cover)
 							} alt="Album art for {album.name}"
-							style="translate: -50%; height: 100%; transform-origin: 0% 40%; perspective: 12cm;">
+							style="height: 100%; translate: -50%;">
 						</li>
 						{/each}
 					</ul>
@@ -165,7 +167,7 @@
 					{albumData[0]?.artist}
 				</span>
 
-				<div class="flex flex-col justify-center gap-4 wrap-anywhere text-gray-50">
+				<div class="flex flex-col justify-center gap-4 wrap-anywhere text-gray-50 lg:px-12">
 					<div bind:this={albumDesc}>
 						{albumData[0]?.desc}
 					</div>
