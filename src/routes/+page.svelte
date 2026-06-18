@@ -21,7 +21,10 @@
 		name: "webtoys",
 		dropdown: ["crappy ui", "games", "misc"]
 	},{
-		name: "about"
+		name: "about me",
+		dir: "about"
+	},{
+		name: "credits"
 	}]
 </script>
 

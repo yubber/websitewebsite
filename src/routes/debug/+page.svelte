@@ -1,6 +1,11 @@
 <script>
+	import Banner from "$lib/components/Banner.svelte";
 </script>
 
-{#each [...Array(5).keys()] as i}
+<div class="w-64">
+{#each [...Array(10).keys()] as i (i)}
+	<Banner design={i}>
 
+	</Banner>
 {/each}
+</div>

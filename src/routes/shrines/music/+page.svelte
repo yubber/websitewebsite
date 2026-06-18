@@ -17,7 +17,7 @@
 		name: "I Love My Computer",
 		artist: "Ninajirachi",
 		cover: "https://upload.wikimedia.org/wikipedia/en/d/dd/I_Love_My_Computer_by_Ninajirachi.png",
-		desc: "As a kid I spent a lot of time on the computer, and I was super into EDM which was also at its most popular during my childhood. This album is a loving, more mature evolution of that music I loved. Listening to it evokes the same feelings I had all those years ago. Listening to it always puts me in a better mood, and I really, really hope to hear it at a concert. The visuals are also gorgeous, they make me want to get pictures of cell towers framed on my walls."
+		desc: "As a kid I spent a lot of time on the computer, and I was super into EDM which was also at its most popular during my childhood. This album is a loving, more mature evolution of that music I loved. Listening to it evokes the same feelings I had all those years ago. Listening to it always puts me in a better mood, and I really, really hope to hear it at a concert. The visuals are also gorgeous, they make me want to get pictures of cell towers framed on my walls.\n\nI also really appreciate her cheeky use of Times New Roman here. I think it's the future of Comic Sans, "
 	},{
 		name: "how i'm feeling now",
 		artist: "Charli xcx",
