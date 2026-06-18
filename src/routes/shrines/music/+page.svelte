@@ -7,6 +7,8 @@
 
 	import MovieMakerTitle from "$lib/components/MovieMakerTitle.svelte";
 	import PixelBlobs from "./PixelBlobs.svelte";
+	import SpinText from "$lib/components/SpinText.svelte";
+    import { invalidate } from "$app/navigation";
 
 	let titleContainerOuter, titleContainerInner, albumTitle, albumArtist, albumDesc
 	const albumInterval = 25
@@ -73,10 +75,33 @@
 		gsap.set(".albumCover:not(:first-child)", {filter: "brightness(50%)"})
 		gsap.utils.selector("#albumsCarousel")(".albumCover").forEach((e, i) => {
 			// item is "focused" at t = i / length-1. duration is arbitrary relative units??
-			// move this in
 			if (i !== 0){
+				// move this in
 				albumsTl.fromTo(e, {rotateY: -rotateValue}, {rotateY: 0, duration: 1, ease: "power2.inOut"}, i-1)
 				albumsTl.fromTo(e, {filter: "brightness(50%)"}, {filter: "brightness(100%)", duration: 1, ease: "power2.inOut"}, i-1)
+
+				// text transition
+				albumsTl.to(albumTitle, {
+					scrambleText: {
+						text: albumData[i].name,
+						chars: 'lowerCase'
+					},
+					duration: 0.7
+				}, i-0.7)
+				albumsTl.to(albumArtist, {
+					scrambleText: {
+						text: albumData[i].artist,
+						chars: 'lowerCase'
+					},
+					duration: 0.7
+				}, i-0.7)
+				albumsTl.to(albumDesc, {
+					scrambleText: {
+						text: albumData[i].desc,
+						chars: '​'
+					},
+					duration: 0.7
+				}, i-0.7)
 			}
 			// move this out
 			if (i !== albumData.length - 1){
@@ -94,43 +119,25 @@
 			snap: {
 				// ease: "elastic.out",
 				snapTo: 1 / (albumData.length - 1),
-				delay: 0.1,
-				duration: {min: 0.1, max: 0.7},
-				onStart: (self) => {
-					const index = Math.round(albumsTl.progress() * (albumData.length - 1) + 0.499 * self.direction) // lmao
-					gsap.to(albumTitle, {
-						scrambleText: {
-							text: albumData[index].name,
-							chars: 'lowerCase'
-						},
-						duration: 0.5
-					})
-					gsap.to(albumArtist, {
-						scrambleText: {
-							text: albumData[index].artist,
-							chars: 'lowerCase'
-						},
-						duration: 0.5
-					})
-					gsap.to(albumDesc, {
-						scrambleText: {
-							text: albumData[index].desc,
-							chars: '​'
-						},
-						duration: 0.5
-					})
-				}
+				delay: 0,
+				duration: {min: 0.1, max: 0.5}
 			},
 			scrub: true,
 			pin: true,
-			animation: albumsTl,
-			onUpdate: ()=>{console.log(albumsTl.progress())}
+			invalidateOnRefresh: true,
+			animation: albumsTl
 		})
 	})
 </script>
 <!-- <boody> -->
 
 <PixelBlobs></PixelBlobs>
+
+<div class="fixed flex items-center justify-center h-[100vh] w-[100vw] opacity-25">
+	<SpinText gapPx={4}>
+		<img src="https://freight.cargo.site/t/original/i/facff737252a9f4a9021e756b104b84cd54a76d59381b956e493c6c48d2dd7aa/u-favicon.png" alt="">
+	</SpinText>
+</div>
 
 <div id="smooth-wrapper">
 	<div id="smooth-content">
@@ -145,31 +152,34 @@
 			</div>
 		</div>
 
-		<div class="h-[100vh] relative">
-			<div class="albums-section h-full flex flex-col justify-center perspective-origin-center perspective-midrange transform-3d">
-				<div id="albumsCarousel" class="w-full h-[300px] overflow-visible transform-3d">
-					<ul class="relative left-[50%] h-full w-full transform-3d">
-						{#each albumData as album, i (i)}
-						<li class="absolute object-contain h-full albumCover transform-3d" style="translate: {i*albumInterval}cqw; transform-origin: 0% 40%;">
-							<img src={
-								(album.cover)
-							} alt="Album art for {album.name}"
-							style="height: 100%; translate: -50%;">
-						</li>
-						{/each}
-					</ul>
-				</div>
+		<div class="h-[100vh]">
+			<div class="albums-section perspective-origin-center perspective-midrange transform-3d">
+				<div class="relative top-[40%] transform-3d flex flex-col justify-start">
+					<div id="albumsCarousel" class="w-full h-[300px] overflow-visible transform-3d">
+						<ul class="relative left-[50%] h-full w-full transform-3d">
+							{#each albumData as album, i (i)}
+							<li class="absolute object-contain h-full albumCover transform-3d" style="translate: {i*albumInterval}cqw; transform-origin: 0% 40%;">
+								<img src={
+									(album.cover)
+								} alt="Album art for {album.name}"
+								style="height: 100%; translate: -50%;">
+							</li>
+							{/each}
+						</ul>
+					</div>
 
-				<span bind:this={albumTitle} class="text-2xl text-center text-gray-50">
-					{albumData[0]?.name}
-				</span>
-				<span bind:this={albumArtist} class="text-xl text-gray-400 text-center">
-					{albumData[0]?.artist}
-				</span>
 
-				<div class="flex flex-col justify-center gap-4 wrap-anywhere text-gray-50 lg:px-12">
-					<div bind:this={albumDesc}>
-						{albumData[0]?.desc}
+					<span bind:this={albumTitle} class="text-4xl text-center text-gray-50 squishroman pt-4">
+						{albumData[0]?.name}
+					</span>
+					<span bind:this={albumArtist} class="text-xl text-gray-400 text-center font-mono">
+						{albumData[0]?.artist}
+					</span>
+
+					<div class="flex flex-col justify-center gap-4 wrap-anywhere text-gray-50 lg:px-12 py-4 arialNarrow">
+						<div bind:this={albumDesc}>
+							{albumData[0]?.desc}
+						</div>
 					</div>
 				</div>
 			</div>

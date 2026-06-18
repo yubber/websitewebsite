@@ -14,6 +14,21 @@
 
 .stretchroman {
 	font-family: 'Times New Roman MT Condensed', Times, serif;
+	font-width: condensed;
+	font-stretch: condensed;
+}
+
+.squishroman {
+	font-family: 'Times New Roman MT', Times, serif;
+	/* font-width: expanded;
+	font-stretch: expanded; */
+	scale: 200% 100%;
+}
+
+.arialNarrow {
+	font: 'Arial Narrow', Arial, sans-serif;
+	font-stretch: condensed;
+	font-width: condensed;
 }
 
 .glow {
