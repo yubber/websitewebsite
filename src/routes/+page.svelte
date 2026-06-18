@@ -58,9 +58,9 @@
 		<span class="h-full">
 			<img src={firecvnt} alt="Firefox Now!">
 		</span>
-		<a href="javascript:alert('No matter where you go, everyone's connected.')">
+		<button onclick={()=>{alert("No matter where you go, everyone's connected.")}} class="cursor-pointer">
 			<img src={lainBadge} title="from zanarkand.neocities.org" alt="Serial Experiments Lain">
-		</a>
+		</button>
 		<a href="https://www.youtube.com/watch?v=RKybAhTw8iE&list=PLQQj6Cezh2Nupac5mjljKE-SncM_2Go59&index=5" class="h-full">
 			<img src={ilmc} alt="Ninajirachi - I Love My Computer" class="h-full object-contain outset">
 		</a>

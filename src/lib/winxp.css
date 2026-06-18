@@ -1,8 +1,8 @@
 /*! XP.css v0.2.6 - https://botoxparty.github.io/XP.css/ */
 @font-face {
     font-family: "Pixelated MS Sans Serif";
-    src: url("ms_sans_serif.woff") format("woff");
-    src: url("ms_sans_serif.woff2") format("woff2");
+    src: url("https://unpkg.com/xp.css@0.2.6/dist/ms_sans_serif.woff") format("woff");
+    src: url("https://unpkg.com/xp.css@0.2.6/dist/ms_sans_serif.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
 }
@@ -518,9 +518,13 @@ menu.xp[role=tablist].justified button {
     font-size: 13px;
     text-shadow: 1px 1px #0f1089;
     height: 24px;
+	display: flex;
 }
 .title-bar-text {
     padding-left: 3px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .title-bar-controls {
     display: flex;
@@ -595,7 +599,7 @@ menu.xp[role=tablist].justified button {
     gap: 0;
 }
 .status-bar-field {
-    font-family: "Pixelated MS Sans Serif",Arial;
+    font-family: "Pixelated MS Sans Serif", Arial;
     -webkit-font-smoothing: antialiased;
     box-shadow: none;
     padding: 1px 2px;
