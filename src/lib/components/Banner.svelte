@@ -155,14 +155,14 @@
 	<img src={snuff562} alt="" width="100%">
 </a>
 {:else if design === 8}
-<div class="flex flex-col justify-center">
+<div class="flex flex-col justify-center bg-blue-950 text-red-50">
 	<h2>FL STUDIO FREE DOWNLOAD</h2>
 	<SpinText class="text-9xl">
 		🥕
 	</SpinText>
 	<button class="dlbtn">
 		<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="butt" stroke-linejoin="arcs"><path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5"/></svg>
-		DOWNLOAD NOW
+		CLICK NOW
 	</button>
 </div>
 {:else if design === 10}
@@ -177,11 +177,13 @@
 	</div>
 </div>
 {:else if design === 12}
-<div>
+<div class="flex flex-col justify-center">
 	stopsign
 
 	YOUR MIND IS INFECTED
-	<button>Scan now</button>
+	<button>
+		Scan now
+	</button>
 </div>
 {:else if design === 13}
 <div>
@@ -226,6 +228,15 @@
 		@media (prefers-reduced-motion: reduce) {
 			animation: 7s infinite flashing;
 		}
+	}
+
+	.dlbtn {
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(
+			var(--color-green-700) 0%,
+			var(--color-green-200) 100%
+		)
 	}
 
 	@keyframes flashing {

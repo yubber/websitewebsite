@@ -11,8 +11,7 @@
     import { onMount } from "svelte";
 
 	let items = [{
-		name: "projects",
-		dropdown: ["code", "videos", "misc"]
+		name: "projects"
 	},{
 		name: "favorites",
 		dir: "shrines",
