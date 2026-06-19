@@ -1,5 +1,5 @@
 <script>
-	const designCount = 9
+	const designCount = 16
 	let {design = Math.round(Math.random() * (designCount-1))} = $props()
 
 	import heartgif from "$lib/assets/heart.gif"
@@ -197,7 +197,7 @@
 </div>
 {:else if design === 15}
 <img src={advquest} alt="" width="100%">
-{:else if design === 16}
+{:else if design === 0}
 <a href="https://www.eyezmaze.com/">
 	<div class="grid grid-cols-3 justify-items-center">
 		{#each [eyezlogo, eyez1, eyez2, eyez3, eyez4, eyez5] as pic, i (i)}

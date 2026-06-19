@@ -10,6 +10,11 @@
 
 	const sidebars = document.getElementsByClassName("sidebar")
 
+	const randIds = [...Array(16).keys()]
+		.map(value => ({ value, sort: Math.random() }))
+		.sort((a, b) => a.sort - b.sort)
+		.map(({ value }) => value)
+
 	onMount(() => {
 		gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 		ScrollSmoother.create({
@@ -18,7 +23,18 @@
 			// smoothTouch: 0.1
 		});
 
-		gsap.to
+		let adsTl = gsap.timeline({
+			scrollTrigger: {
+				trigger: ".smooth-content",
+				start: "top top",
+				end: "bottom top",
+				scrub: 1
+			}
+		})
+
+		adsTl.to({
+
+		})
 	})
 </script>
 
@@ -56,6 +72,7 @@
 			display: none;
 		}
 		@apply w-72;
+		overflow: hidden;
 	}
 
 	.retrobtn {
