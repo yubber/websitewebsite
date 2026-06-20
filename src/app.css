@@ -12,6 +12,10 @@
 	--color-BodyColor: #f3f4f6;
 }
 
+* {
+	overscroll-behavior: none;
+}
+
 .stretchroman {
 	font-family: 'Times New Roman MT Condensed', Times, serif;
 	font-width: condensed;

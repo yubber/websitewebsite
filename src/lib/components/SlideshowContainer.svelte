@@ -46,6 +46,6 @@
 <div class="{slides[i].styles} {className} z-50"
 	style="background-image: {slides[i].url}">
 	<div class="backdrop-filter w-full h-full" style="backdrop-filter: brightness({brightness}%)">
-		<slot></slot>
+		{@render children()}
 	</div>
 </div>

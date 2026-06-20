@@ -64,7 +64,7 @@
 				start: "top top",
 				end: "bottom top",
 				scrub: 1
-			},
+			}
 		})
 		titleTl.fromTo(titleContainerInner, {rotateY: 0, scale: 1}, {rotateY: '360deg', scale: 0})
 

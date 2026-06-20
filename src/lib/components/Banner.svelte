@@ -57,7 +57,7 @@
 		</div>
 	</div>
 	<div class="p-2">
-		<div class="flex items-center gap-4 p-4">
+		<div class="flex items-center gap-4 p-2">
 			<img src={cakegif} alt="">
 			<span>
 				the hours are going by. The past increases, the future recedes. Possibilities decreasing, regrets mounting.
@@ -104,7 +104,7 @@
 {:else if design === 5}
 <div class="bg-blue-50">
 	<h2 class="text-center font-bold">
-		DO IT APPLICATION
+		DO IT FOR A FREE IPHONE 5!
 	</h2>
 	<hr>
 	<ol class="list-decimal p-2 pl-8">
@@ -199,7 +199,7 @@
 <img src={advquest} alt="" width="100%">
 {:else if design === 0}
 <a href="https://www.eyezmaze.com/">
-	<div class="grid grid-cols-3 justify-items-center">
+	<div class="grid grid-cols-3 justify-items-center bg-blue-950">
 		{#each [eyezlogo, eyez1, eyez2, eyez3, eyez4, eyez5] as pic, i (i)}
 			<img src={pic} alt="">
 		{/each}
@@ -255,7 +255,7 @@
 			translate: 100%;
 		}
 		100% {
-			translate: -200%;
+			translate: -250%;
 		}
 	}
 </style>
